@@ -42,10 +42,10 @@
       background: rgba(250, 250, 247, 0.85); backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .logo { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1.08rem; text-decoration: none; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+    .logo { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1.08rem; text-decoration: none; white-space: nowrap; }
     .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
     .nav-links a { text-decoration: none; font-weight: 500; font-size: 0.95rem; color: var(--muted); }
     .nav-links a:hover { color: var(--ink); }
     .btn {
@@ -53,10 +53,25 @@
       padding: 12px 22px; border-radius: 999px; transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .btn-primary { background: var(--accent); color: #fff; }
+    /* .nav-links a is more specific than .btn-primary — restate the button colors */
+    .nav-links a.btn-primary, .nav-links a.btn-primary:hover { color: #fff; }
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37, 71, 232, 0.28); }
     .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); background: var(--card); }
     .btn-ghost:hover { border-color: var(--ink); }
     .nav-links .btn { padding: 9px 18px; }
+
+    /* ---------- language switcher ---------- */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      border: 1px solid var(--line); border-radius: 999px; background: var(--card); padding: 3px;
+    }
+    .lang-switch button {
+      font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.06em;
+      border: 0; background: transparent; color: var(--muted); cursor: pointer;
+      padding: 5px 10px; border-radius: 999px; transition: background 0.15s ease, color 0.15s ease;
+    }
+    .lang-switch button:hover { color: var(--ink); }
+    .lang-switch button.active { background: var(--ink); color: #fff; }
 
     /* ---------- hero ---------- */
     .hero { padding: 96px 0 80px; }
@@ -159,9 +174,13 @@
       .concepts, .services { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 30px; }
       .nav-links a:not(.btn) { display: none; }
+      .nav-links { gap: 12px; }
       .hero { padding: 68px 0 56px; }
       section { padding: 56px 0; }
       .contact-card { padding: 48px 24px; }
+    }
+    @media (max-width: 420px) {
+      .nav-links .btn { display: none; }
     }
   </style>
 </head>
@@ -171,26 +190,31 @@
   <div class="wrap nav-inner">
     <a class="logo" href="#">ClearSite<span>·</span>Studio</a>
     <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a class="btn btn-primary" href="#contact">Get in touch</a>
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-setlang="en">EN</button>
+        <button type="button" data-setlang="de">DE</button>
+        <button type="button" data-setlang="pl">PL</button>
+      </div>
+      <a class="btn btn-primary" href="#contact" data-i18n="nav.cta">Get in touch</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
-    <span class="mono">Web studio — Berlin</span>
-    <h1>Clear, fast websites that turn <em>searches into customers</em>.</h1>
-    <p>
+    <span class="mono" data-i18n="hero.eyebrow">Web studio — Berlin</span>
+    <h1 data-i18n-html="hero.h1">Clear, fast websites that turn <em>searches into customers</em>.</h1>
+    <p data-i18n="hero.p">
       I design and build websites for small and local businesses — hand-built pages
       that load instantly, look like your business, and make people pick up the phone.
       No page builders, no bloat, no templates everyone else already has.
     </p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="#work">See the work</a>
-      <a class="btn btn-ghost" href="#contact">Start a project</a>
+      <a class="btn btn-primary" href="#work" data-i18n="hero.cta1">See the work</a>
+      <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">Start a project</a>
     </div>
     <div class="langs">
       <span class="lang">English</span>
@@ -203,8 +227,8 @@
 <section id="work">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="mono">Selected work</span>
-      <h2>Built to bring in calls, not just clicks.</h2>
+      <span class="mono" data-i18n="work.eyebrow">Selected work</span>
+      <h2 data-i18n="work.h2">Built to bring in calls, not just clicks.</h2>
     </div>
 
     <div class="feature reveal">
@@ -212,14 +236,14 @@
         <img src="assets/minikoparka-hero.jpg" alt="M.K.T Tomasz Ćwioro — transport and earthworks website" loading="eager">
       </div>
       <div class="info">
-        <span class="tag tag-live">Client work · Live</span>
-        <h3>M.K.T Ćwioro — Transport &amp; Earthworks</h3>
-        <p>
+        <span class="tag tag-live" data-i18n="work.tagLive">Client work · Live</span>
+        <h3 data-i18n="work.featureH3">M.K.T Ćwioro — Transport &amp; Earthworks</h3>
+        <p data-i18n="work.featureP">
           A one-page site for a Polish transport and earthworks company: services,
           machinery, coverage area and reviews — every section funnelling to one
           action, the phone call. Launched on the client's own domain.
         </p>
-        <a class="visit" href="https://cwioro-robotyziemne.pl" target="_blank" rel="noopener">Visit cwioro-robotyziemne.pl →</a>
+        <a class="visit" href="https://cwioro-robotyziemne.pl" target="_blank" rel="noopener" data-i18n="work.visit">Visit cwioro-robotyziemne.pl →</a>
       </div>
     </div>
 
@@ -227,22 +251,22 @@
       <a class="concept reveal" href="https://bartxs.github.io/demo/mikmat-instal/" target="_blank" rel="noopener">
         <img src="assets/mikmat-hero.jpg" alt="MikMat Instal concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept">Concept design</span>
-          <h3>Plumbing &amp; leak diagnosis — Wrocław</h3>
-          <p>Emergency-first layout: the phone number is never more than one glance away.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c1H3">Plumbing &amp; leak diagnosis — Wrocław</h3>
+          <p data-i18n="work.c1P">Emergency-first layout: the phone number is never more than one glance away.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/ar-sanit/" target="_blank" rel="noopener">
         <img src="assets/arsanit-hero.jpg" alt="AR-SANIT concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept">Concept design</span>
-          <h3>Bathroom fittings &amp; plumbing shop</h3>
-          <p>A navy-and-brass storefront feel for a 40-year-old family trade business.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept2">Concept design</span>
+          <h3 data-i18n="work.c2H3">Bathroom fittings &amp; plumbing shop</h3>
+          <p data-i18n="work.c2P">A navy-and-brass storefront feel for a 40-year-old family trade business.</p>
         </div>
       </a>
     </div>
 
-    <p class="work-note reveal">
+    <p class="work-note reveal" data-i18n="work.note">
       Concept designs are working prototypes created for real local businesses, using
       licensed stock photography. The full build — with your photos, your colours and
       your content — happens on commission.
@@ -253,14 +277,14 @@
 <section id="services">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="mono">Services</span>
-      <h2>One clear offer, start to finish.</h2>
+      <span class="mono" data-i18n="services.eyebrow">Services</span>
+      <h2 data-i18n="services.h2">One clear offer, start to finish.</h2>
     </div>
     <div class="services">
       <div class="service reveal">
         <span class="num">01</span>
-        <h3>Website design &amp; build</h3>
-        <p>
+        <h3 data-i18n="services.s1H3">Website design &amp; build</h3>
+        <p data-i18n="services.s1P">
           A fast, mobile-first website designed around what your customers actually do:
           call, book, or visit. Copywriting help, SEO basics and launch on your own
           domain included.
@@ -268,8 +292,8 @@
       </div>
       <div class="service reveal">
         <span class="num">02</span>
-        <h3>Care plan</h3>
-        <p>
+        <h3 data-i18n="services.s2H3">Care plan</h3>
+        <p data-i18n="services.s2P">
           Your site stays current without you thinking about it — monthly text and photo
           updates, price and opening-hours changes, and someone to message when anything
           needs doing.
@@ -277,12 +301,12 @@
       </div>
       <div class="service reveal">
         <span class="num">03</span>
-        <h3>Content &amp; visibility</h3>
-        <p>
+        <h3 data-i18n="services.s3H3">Content &amp; visibility</h3>
+        <p data-i18n="services.s3P">
           Google Business Profile tune-ups, seasonal promo graphics and post content that
           keeps your business showing up where locals are searching.
         </p>
-        <span class="soon">Launching soon</span>
+        <span class="soon" data-i18n="services.soon">Launching soon</span>
       </div>
     </div>
   </div>
@@ -291,27 +315,27 @@
 <section id="about">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="mono">About</span>
-      <h2>Small studio. Direct line. No handoffs.</h2>
+      <span class="mono" data-i18n="about.eyebrow">About</span>
+      <h2 data-i18n="about.h2">Small studio. Direct line. No handoffs.</h2>
     </div>
     <div class="about-grid">
       <div class="reveal">
-        <p>
+        <p data-i18n="about.p1">
           I'm Bartosz — a web designer and developer based in Berlin, working with small
           and local businesses across Germany and Poland. ClearSite Studio is exactly what
           it sounds like: clear websites, built one at a time, by the person you actually
           talk to.
         </p>
-        <p>
+        <p data-i18n="about.p2">
           Most of my clients are great at their trade and have the reviews to prove it —
           they just don't show up properly online. That's the gap I close: a site that
           looks as professional as your work already is.
         </p>
       </div>
       <div class="facts">
-        <div class="fact reveal"><strong>Based in Berlin</strong><span>Working with clients in Germany &amp; Poland</span></div>
-        <div class="fact reveal"><strong>Three languages</strong><span>Projects run in English, German or Polish</span></div>
-        <div class="fact reveal"><strong>Built by hand</strong><span>Custom code — no page builders, no plugins to break</span></div>
+        <div class="fact reveal"><strong data-i18n="about.f1T">Based in Berlin</strong><span data-i18n="about.f1S">Working with clients in Germany &amp; Poland</span></div>
+        <div class="fact reveal"><strong data-i18n="about.f2T">Three languages</strong><span data-i18n="about.f2S">Projects run in English, German or Polish</span></div>
+        <div class="fact reveal"><strong data-i18n="about.f3T">Built by hand</strong><span data-i18n="about.f3S">Custom code — no page builders, no plugins to break</span></div>
       </div>
     </div>
   </div>
@@ -320,13 +344,13 @@
 <section id="contact">
   <div class="wrap">
     <div class="contact-card reveal">
-      <span class="mono">Contact</span>
-      <h2>Have a business that deserves a better website?</h2>
-      <p>
+      <span class="mono" data-i18n="contact.eyebrow">Contact</span>
+      <h2 data-i18n="contact.h2">Have a business that deserves a better website?</h2>
+      <p data-i18n="contact.p">
         Tell me what you do and where — I'll reply with honest advice and, if it's a fit,
         a free first-look design of your homepage. No obligation either way.
       </p>
-      <a class="btn btn-primary" href="mailto:b.soltysik90@gmail.com?subject=Website%20enquiry%20—%20ClearSite%20Studio">b.soltysik90@gmail.com</a>
+      <a class="btn btn-primary" id="mail-cta" href="mailto:b.soltysik90@gmail.com?subject=Website%20enquiry%20—%20ClearSite%20Studio">b.soltysik90@gmail.com</a>
       <div class="langs">
         <span class="lang">English</span>
         <span class="lang">Deutsch</span>
@@ -338,16 +362,167 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 ClearSite Studio — Berlin</span>
-    <span>Websites for local businesses · EN / DE / PL</span>
+    <span data-i18n="footer.left">© 2026 ClearSite Studio — Berlin</span>
+    <span data-i18n="footer.right">Websites for local businesses · EN / DE / PL</span>
   </div>
 </footer>
 
 <script>
+  // ---------- reveal on scroll ----------
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }, { threshold: 0.12 });
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  // ---------- i18n ----------
+  const I18N = {
+    en: {
+      _title: "ClearSite Studio — websites for local businesses · Berlin",
+      _mailSubject: "Website enquiry — ClearSite Studio",
+      "nav.work": "Work", "nav.services": "Services", "nav.about": "About", "nav.cta": "Get in touch",
+      "hero.eyebrow": "Web studio — Berlin",
+      "hero.h1": "Clear, fast websites that turn <em>searches into customers</em>.",
+      "hero.p": "I design and build websites for small and local businesses — hand-built pages that load instantly, look like your business, and make people pick up the phone. No page builders, no bloat, no templates everyone else already has.",
+      "hero.cta1": "See the work", "hero.cta2": "Start a project",
+      "work.eyebrow": "Selected work", "work.h2": "Built to bring in calls, not just clicks.",
+      "work.tagLive": "Client work · Live",
+      "work.featureH3": "M.K.T Ćwioro — Transport & Earthworks",
+      "work.featureP": "A one-page site for a Polish transport and earthworks company: services, machinery, coverage area and reviews — every section funnelling to one action, the phone call. Launched on the client's own domain.",
+      "work.visit": "Visit cwioro-robotyziemne.pl →",
+      "work.tagConcept": "Concept design", "work.tagConcept2": "Concept design",
+      "work.c1H3": "Plumbing & leak diagnosis — Wrocław",
+      "work.c1P": "Emergency-first layout: the phone number is never more than one glance away.",
+      "work.c2H3": "Bathroom fittings & plumbing shop",
+      "work.c2P": "A navy-and-brass storefront feel for a 40-year-old family trade business.",
+      "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
+      "services.eyebrow": "Services", "services.h2": "One clear offer, start to finish.",
+      "services.s1H3": "Website design & build",
+      "services.s1P": "A fast, mobile-first website designed around what your customers actually do: call, book, or visit. Copywriting help, SEO basics and launch on your own domain included.",
+      "services.s2H3": "Care plan",
+      "services.s2P": "Your site stays current without you thinking about it — monthly text and photo updates, price and opening-hours changes, and someone to message when anything needs doing.",
+      "services.s3H3": "Content & visibility",
+      "services.s3P": "Google Business Profile tune-ups, seasonal promo graphics and post content that keeps your business showing up where locals are searching.",
+      "services.soon": "Launching soon",
+      "about.eyebrow": "About", "about.h2": "Small studio. Direct line. No handoffs.",
+      "about.p1": "I'm Bartosz — a web designer and developer based in Berlin, working with small and local businesses across Germany and Poland. ClearSite Studio is exactly what it sounds like: clear websites, built one at a time, by the person you actually talk to.",
+      "about.p2": "Most of my clients are great at their trade and have the reviews to prove it — they just don't show up properly online. That's the gap I close: a site that looks as professional as your work already is.",
+      "about.f1T": "Based in Berlin", "about.f1S": "Working with clients in Germany & Poland",
+      "about.f2T": "Three languages", "about.f2S": "Projects run in English, German or Polish",
+      "about.f3T": "Built by hand", "about.f3S": "Custom code — no page builders, no plugins to break",
+      "contact.eyebrow": "Contact", "contact.h2": "Have a business that deserves a better website?",
+      "contact.p": "Tell me what you do and where — I'll reply with honest advice and, if it's a fit, a free first-look design of your homepage. No obligation either way.",
+      "footer.left": "© 2026 ClearSite Studio — Berlin",
+      "footer.right": "Websites for local businesses · EN / DE / PL"
+    },
+    de: {
+      _title: "ClearSite Studio — Websites für lokale Unternehmen · Berlin",
+      _mailSubject: "Website-Anfrage — ClearSite Studio",
+      "nav.work": "Projekte", "nav.services": "Leistungen", "nav.about": "Über mich", "nav.cta": "Kontakt aufnehmen",
+      "hero.eyebrow": "Webstudio — Berlin",
+      "hero.h1": "Klare, schnelle Websites, die aus <em>Suchanfragen Kunden</em> machen.",
+      "hero.p": "Ich gestalte und baue Websites für kleine und lokale Unternehmen — von Hand gebaute Seiten, die sofort laden, nach Ihrem Unternehmen aussehen und dafür sorgen, dass Menschen zum Telefon greifen. Keine Baukästen, kein Ballast, keine Vorlagen, die alle anderen schon haben.",
+      "hero.cta1": "Projekte ansehen", "hero.cta2": "Projekt starten",
+      "work.eyebrow": "Ausgewählte Projekte", "work.h2": "Gebaut für Anrufe, nicht nur für Klicks.",
+      "work.tagLive": "Kundenprojekt · Live",
+      "work.featureH3": "M.K.T Ćwioro — Transport & Erdarbeiten",
+      "work.featureP": "Eine One-Page-Website für ein polnisches Transport- und Erdbauunternehmen: Leistungen, Maschinen, Einsatzgebiet und Bewertungen — jede Sektion führt zu einer einzigen Aktion: dem Anruf. Gestartet auf der eigenen Domain des Kunden.",
+      "work.visit": "cwioro-robotyziemne.pl besuchen →",
+      "work.tagConcept": "Konzeptdesign", "work.tagConcept2": "Konzeptdesign",
+      "work.c1H3": "Sanitär & Leckortung — Wrocław",
+      "work.c1P": "Notfall-orientiertes Layout: Die Telefonnummer ist nie mehr als einen Blick entfernt.",
+      "work.c2H3": "Badausstattung & Sanitärgeschäft",
+      "work.c2P": "Marineblau und Messing — ein Auftritt für einen Familienbetrieb mit 40 Jahren Handwerkstradition.",
+      "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
+      "services.eyebrow": "Leistungen", "services.h2": "Ein klares Angebot, von Anfang bis Ende.",
+      "services.s1H3": "Webdesign & Umsetzung",
+      "services.s1P": "Eine schnelle, mobile-first Website, gestaltet um das, was Ihre Kunden wirklich tun: anrufen, buchen oder vorbeikommen. Hilfe beim Text, SEO-Grundlagen und Launch auf Ihrer eigenen Domain inklusive.",
+      "services.s2H3": "Betreuungspaket",
+      "services.s2P": "Ihre Website bleibt aktuell, ohne dass Sie daran denken müssen — monatliche Text- und Fotoänderungen, Preis- und Öffnungszeiten-Updates und ein direkter Ansprechpartner, wenn etwas zu tun ist.",
+      "services.s3H3": "Content & Sichtbarkeit",
+      "services.s3P": "Google-Unternehmensprofil-Optimierung, saisonale Promo-Grafiken und Beiträge, die Ihr Unternehmen dort sichtbar halten, wo Ihre Kunden suchen.",
+      "services.soon": "Demnächst",
+      "about.eyebrow": "Über mich", "about.h2": "Kleines Studio. Direkter Draht. Keine Umwege.",
+      "about.p1": "Ich bin Bartosz — Webdesigner und Entwickler in Berlin. Ich arbeite mit kleinen und lokalen Unternehmen in Deutschland und Polen. ClearSite Studio ist genau das, wonach es klingt: klare Websites, eine nach der anderen gebaut, von der Person, mit der Sie tatsächlich sprechen.",
+      "about.p2": "Die meisten meiner Kunden sind hervorragend in ihrem Handwerk und haben die Bewertungen, die das belegen — sie sind nur online nicht richtig sichtbar. Genau diese Lücke schließe ich: eine Website, die so professionell aussieht wie Ihre Arbeit es bereits ist.",
+      "about.f1T": "In Berlin ansässig", "about.f1S": "Kunden in Deutschland & Polen",
+      "about.f2T": "Drei Sprachen", "about.f2S": "Projekte auf Deutsch, Englisch oder Polnisch",
+      "about.f3T": "Von Hand gebaut", "about.f3S": "Individueller Code — keine Baukästen, keine Plugins, die kaputtgehen",
+      "contact.eyebrow": "Kontakt", "contact.h2": "Haben Sie ein Unternehmen, das eine bessere Website verdient?",
+      "contact.p": "Erzählen Sie mir, was Sie tun und wo — ich antworte mit einer ehrlichen Einschätzung und, wenn es passt, einem kostenlosen ersten Design Ihrer Startseite. Ganz unverbindlich.",
+      "footer.left": "© 2026 ClearSite Studio — Berlin",
+      "footer.right": "Websites für lokale Unternehmen · DE / EN / PL"
+    },
+    pl: {
+      _title: "ClearSite Studio — strony internetowe dla lokalnych firm · Berlin",
+      _mailSubject: "Zapytanie o stronę — ClearSite Studio",
+      "nav.work": "Realizacje", "nav.services": "Oferta", "nav.about": "O mnie", "nav.cta": "Napisz do mnie",
+      "hero.eyebrow": "Studio stron internetowych — Berlin",
+      "hero.h1": "Przejrzyste, szybkie strony, które zamieniają <em>wyszukiwania w klientów</em>.",
+      "hero.p": "Projektuję i buduję strony internetowe dla małych, lokalnych firm — pisane ręcznie strony, które ładują się natychmiast, wyglądają jak Twoja firma i sprawiają, że ludzie sięgają po telefon. Bez kreatorów, bez zbędnych dodatków, bez szablonów, które mają już wszyscy.",
+      "hero.cta1": "Zobacz realizacje", "hero.cta2": "Zacznij projekt",
+      "work.eyebrow": "Wybrane realizacje", "work.h2": "Budowane tak, żeby dzwonili — nie tylko klikali.",
+      "work.tagLive": "Realizacja · Online",
+      "work.featureH3": "M.K.T Ćwioro — Transport i Roboty Ziemne",
+      "work.featureP": "Jednostronicowa witryna dla firmy transportowo-ziemnej: usługi, maszyny, zasięg działania i opinie — każda sekcja prowadzi do jednego działania: telefonu. Uruchomiona na własnej domenie klienta.",
+      "work.visit": "Zobacz cwioro-robotyziemne.pl →",
+      "work.tagConcept": "Projekt koncepcyjny", "work.tagConcept2": "Projekt koncepcyjny",
+      "work.c1H3": "Hydraulik i wykrywanie wycieków — Wrocław",
+      "work.c1P": "Układ „awaryjny”: numer telefonu zawsze w zasięgu wzroku.",
+      "work.c2H3": "Sklep z armaturą i instalacjami",
+      "work.c2P": "Granat i mosiądz — witryna dla rodzinnej firmy z 40-letnią tradycją.",
+      "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
+      "services.eyebrow": "Oferta", "services.h2": "Jedna przejrzysta oferta, od początku do końca.",
+      "services.s1H3": "Projekt i budowa strony",
+      "services.s1P": "Szybka strona projektowana z myślą o telefonie, wokół tego, co naprawdę robią Twoi klienci: dzwonią, rezerwują albo przychodzą. W cenie pomoc przy tekstach, podstawy SEO i start na Twojej własnej domenie.",
+      "services.s2H3": "Opieka nad stroną",
+      "services.s2P": "Twoja strona jest zawsze aktualna, a Ty nie musisz o tym myśleć — comiesięczne zmiany tekstów i zdjęć, aktualizacja cen i godzin otwarcia oraz jedna osoba do kontaktu, gdy coś trzeba zrobić.",
+      "services.s3H3": "Treści i widoczność",
+      "services.s3P": "Optymalizacja wizytówki Google, sezonowe grafiki promocyjne i posty, dzięki którym Twoja firma pojawia się tam, gdzie szukają jej klienci.",
+      "services.soon": "Wkrótce",
+      "about.eyebrow": "O mnie", "about.h2": "Małe studio. Kontakt bez pośredników.",
+      "about.p1": "Nazywam się Bartosz — projektuję i buduję strony internetowe. Mieszkam w Berlinie i pracuję z małymi, lokalnymi firmami w Niemczech i w Polsce. ClearSite Studio to dokładnie to, na co wygląda: przejrzyste strony, budowane jedna po drugiej, przez osobę, z którą naprawdę rozmawiasz.",
+      "about.p2": "Większość moich klientów to świetni fachowcy z opiniami, które to potwierdzają — po prostu nie widać ich w internecie. Tę lukę zamykam: strona, która wygląda tak profesjonalnie, jak Twoja praca.",
+      "about.f1T": "Studio w Berlinie", "about.f1S": "Klienci w Niemczech i w Polsce",
+      "about.f2T": "Trzy języki", "about.f2S": "Projekty po polsku, niemiecku lub angielsku",
+      "about.f3T": "Kod pisany ręcznie", "about.f3S": "Bez kreatorów i wtyczek, które się psują",
+      "contact.eyebrow": "Kontakt", "contact.h2": "Masz firmę, która zasługuje na lepszą stronę?",
+      "contact.p": "Napisz, czym się zajmujesz i gdzie działasz — odpowiem szczerą poradą, a jeśli będzie to miało sens, przygotuję bezpłatny wstępny projekt Twojej strony głównej. Bez żadnych zobowiązań.",
+      "footer.left": "© 2026 ClearSite Studio — Berlin",
+      "footer.right": "Strony internetowe dla lokalnych firm · PL / DE / EN"
+    }
+  };
+
+  function setLang(lang) {
+    const dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    document.title = dict._title;
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const t = dict[el.dataset.i18n];
+      if (t) el.textContent = t;
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+      const t = dict[el.dataset.i18nHtml];
+      if (t) el.innerHTML = t;
+    });
+    const mail = document.getElementById("mail-cta");
+    mail.href = "mailto:b.soltysik90@gmail.com?subject=" + encodeURIComponent(dict._mailSubject);
+    document.querySelectorAll(".lang-switch button").forEach((b) => {
+      b.classList.toggle("active", b.dataset.setlang === lang);
+    });
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+
+  document.querySelectorAll(".lang-switch button").forEach((b) => {
+    b.addEventListener("click", () => setLang(b.dataset.setlang));
+  });
+
+  // priority: ?lang= param → saved choice → browser language → English
+  const param = new URLSearchParams(location.search).get("lang");
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  const browser = (navigator.language || "").slice(0, 2).toLowerCase();
+  const initial = [param, saved, browser].find((l) => l && I18N[l]) || "en";
+  setLang(initial);
 </script>
 
 </body>
