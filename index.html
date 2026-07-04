@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ClearSite Studio — websites for local businesses · Berlin</title>
   <meta name="description" content="ClearSite Studio designs and builds clear, fast websites for small and local businesses — in English, German, or Polish. Based in Berlin.">
+  <link rel="canonical" href="https://bartxs.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bartxs.github.io/">
+  <meta property="og:site_name" content="ClearSite Studio">
+  <meta property="og:title" content="ClearSite Studio — websites for local businesses · Berlin">
+  <meta property="og:description" content="Clear, fast websites for small and local businesses — in English, German or Polish. Free first-look homepage design, no obligation.">
+  <meta property="og:image" content="https://bartxs.github.io/assets/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "ClearSite Studio",
+    "description": "Design and development of fast, clear websites for small and local businesses.",
+    "url": "https://bartxs.github.io/",
+    "email": "b.soltysik90@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" },
+    "areaServed": [ "Germany", "Poland" ],
+    "knowsLanguage": [ "en", "de", "pl" ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -74,13 +97,30 @@
     .lang-switch button.active { background: var(--ink); color: #fff; }
 
     /* ---------- hero ---------- */
-    .hero { padding: 96px 0 80px; }
+    .hero { padding: 84px 0 80px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 56px; align-items: center; }
     .hero .mono { display: block; margin-bottom: 18px; }
-    .hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.7rem); max-width: 17ch; }
+    .hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.4rem); max-width: 17ch; }
     .hero h1 em { font-style: normal; color: var(--accent); }
     .hero p { margin: 26px 0 34px; max-width: 56ch; color: var(--muted); font-size: 1.08rem; }
     .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .langs { margin-top: 40px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .offer {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+      text-decoration: none; background: var(--accent-soft); color: var(--accent);
+      font-weight: 600; font-size: 0.88rem; border-radius: 999px; padding: 8px 16px;
+      border: 1px solid #d7defb;
+    }
+    .offer:hover { border-color: var(--accent); }
+    .stack { position: relative; height: 470px; }
+    .stack img {
+      position: absolute; width: 66%; border-radius: 10px;
+      border: 1px solid var(--line); background: #fff;
+      box-shadow: 0 24px 60px -18px rgba(20, 22, 26, 0.28);
+    }
+    .stack img:nth-child(1) { top: 0; left: 0; transform: rotate(-2deg); z-index: 3; }
+    .stack img:nth-child(2) { top: 122px; right: 0; transform: rotate(2.2deg); z-index: 2; }
+    .stack img:nth-child(3) { bottom: 0; left: 8%; transform: rotate(-1.2deg); z-index: 1; }
+    .langs { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
     .lang {
       font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--muted);
       border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; background: var(--card);
@@ -124,8 +164,9 @@
     .concept p { color: var(--muted); font-size: 0.93rem; }
     .work-note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; max-width: 70ch; }
 
-    /* ---------- services ---------- */
+    /* ---------- services + process ---------- */
     #services { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    #process .service { background: var(--card); }
     .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .service { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; background: var(--paper); }
     .service .num { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-size: 0.8rem; }
@@ -161,6 +202,8 @@
     footer { border-top: 1px solid var(--line); padding: 26px 0; }
     .foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 0.88rem; }
 
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
     /* ---------- reveal ---------- */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in { opacity: 1; transform: none; }
@@ -168,6 +211,8 @@
 
     /* ---------- responsive ---------- */
     @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 0; }
+      .stack { display: none; }
       .feature { grid-template-columns: 1fr; }
       .feature .shot { min-height: 230px; position: relative; }
       .feature .shot img { position: relative; height: auto; }
@@ -204,22 +249,30 @@
 </nav>
 
 <header class="hero">
-  <div class="wrap">
-    <span class="mono" data-i18n="hero.eyebrow">Web studio — Berlin</span>
-    <h1 data-i18n-html="hero.h1">Clear, fast websites that turn <em>searches into customers</em>.</h1>
-    <p data-i18n="hero.p">
-      I design and build websites for small and local businesses — hand-built pages
-      that load instantly, look like your business, and make people pick up the phone.
-      No page builders, no bloat, no templates everyone else already has.
-    </p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="#work" data-i18n="hero.cta1">See the work</a>
-      <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">Start a project</a>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="mono" data-i18n="hero.eyebrow">Web studio — Berlin</span>
+      <h1 data-i18n-html="hero.h1">Clear, fast websites that turn <em>searches into customers</em>.</h1>
+      <p data-i18n="hero.p">
+        I design and build websites for small and local businesses — hand-built pages
+        that load instantly, look like your business, and make people pick up the phone.
+        No page builders, no bloat, no templates everyone else already has.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#work" data-i18n="hero.cta1">See the work</a>
+        <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">Start a project</a>
+      </div>
+      <a class="offer" href="#contact" data-i18n="hero.offer">★ Free first-look design of your homepage — no obligation</a>
+      <div class="langs">
+        <span class="lang">English</span>
+        <span class="lang">Deutsch</span>
+        <span class="lang">Polski</span>
+      </div>
     </div>
-    <div class="langs">
-      <span class="lang">English</span>
-      <span class="lang">Deutsch</span>
-      <span class="lang">Polski</span>
+    <div class="stack" aria-hidden="true">
+      <img src="assets/bobmurphy-hero.jpg" alt="" loading="eager">
+      <img src="assets/greenyoga-hero.jpg" alt="" loading="eager">
+      <img src="assets/minikoparka-hero.jpg" alt="" loading="eager">
     </div>
   </div>
 </header>
@@ -248,6 +301,22 @@
     </div>
 
     <div class="concepts">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
+        <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
+          <h3 data-i18n="work.c3H3">Café &amp; mobile cocktail bar — Berlin</h3>
+          <p data-i18n="work.c3P">A retro menu-board poster look for a window café in Friedrichshain.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/green-yoga/" target="_blank" rel="noopener">
+        <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept4">Concept design</span>
+          <h3 data-i18n="work.c4H3">Yoga studio — Prenzlauer Berg</h3>
+          <p data-i18n="work.c4P">Calm, editorial design for a studio where you pay what you can afford.</p>
+        </div>
+      </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/mikmat-instal/" target="_blank" rel="noopener">
         <img src="assets/mikmat-hero.jpg" alt="MikMat Instal concept design" loading="lazy">
         <div class="pad">
@@ -307,6 +376,41 @@
           keeps your business showing up where locals are searching.
         </p>
         <span class="soon" data-i18n="services.soon">Launching soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="mono" data-i18n="proc.eyebrow">How it works</span>
+      <h2 data-i18n="proc.h2">From first message to launch — three steps.</h2>
+    </div>
+    <div class="services">
+      <div class="service reveal">
+        <span class="num">01</span>
+        <h3 data-i18n="proc.s1H3">Free first look</h3>
+        <p data-i18n="proc.s1P">
+          Tell me what you do and where. I'll send back a free design draft of your
+          homepage — you risk nothing but the time it takes to read one e-mail.
+        </p>
+      </div>
+      <div class="service reveal">
+        <span class="num">02</span>
+        <h3 data-i18n="proc.s2H3">Design &amp; build</h3>
+        <p data-i18n="proc.s2P">
+          You say what you like, I refine and build: copy, photos, mobile-first pages
+          that load instantly — in your language, with updates along the way.
+        </p>
+      </div>
+      <div class="service reveal">
+        <span class="num">03</span>
+        <h3 data-i18n="proc.s3H3">Launch &amp; care</h3>
+        <p data-i18n="proc.s3P">
+          Your site goes live on your own domain. Afterwards the care plan keeps it
+          current — or you take the keys and run it yourself.
+        </p>
       </div>
     </div>
   </div>
@@ -384,17 +488,30 @@
       "hero.h1": "Clear, fast websites that turn <em>searches into customers</em>.",
       "hero.p": "I design and build websites for small and local businesses — hand-built pages that load instantly, look like your business, and make people pick up the phone. No page builders, no bloat, no templates everyone else already has.",
       "hero.cta1": "See the work", "hero.cta2": "Start a project",
+      "hero.offer": "★ Free first-look design of your homepage — no obligation",
       "work.eyebrow": "Selected work", "work.h2": "Built to bring in calls, not just clicks.",
       "work.tagLive": "Client work · Live",
       "work.featureH3": "M.K.T Ćwioro — Transport & Earthworks",
       "work.featureP": "A one-page site for a Polish transport and earthworks company: services, machinery, coverage area and reviews — every section funnelling to one action, the phone call. Launched on the client's own domain.",
       "work.visit": "Visit cwioro-robotyziemne.pl →",
       "work.tagConcept": "Concept design", "work.tagConcept2": "Concept design",
+      "work.tagConcept3": "Concept design", "work.tagConcept4": "Concept design",
       "work.c1H3": "Plumbing & leak diagnosis — Wrocław",
       "work.c1P": "Emergency-first layout: the phone number is never more than one glance away.",
       "work.c2H3": "Bathroom fittings & plumbing shop",
       "work.c2P": "A navy-and-brass storefront feel for a 40-year-old family trade business.",
+      "work.c3H3": "Café & mobile cocktail bar — Berlin",
+      "work.c3P": "A retro menu-board poster look for a window café in Friedrichshain.",
+      "work.c4H3": "Yoga studio — Prenzlauer Berg",
+      "work.c4P": "Calm, editorial design for a studio where you pay what you can afford.",
       "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
+      "proc.eyebrow": "How it works", "proc.h2": "From first message to launch — three steps.",
+      "proc.s1H3": "Free first look",
+      "proc.s1P": "Tell me what you do and where. I'll send back a free design draft of your homepage — you risk nothing but the time it takes to read one e-mail.",
+      "proc.s2H3": "Design & build",
+      "proc.s2P": "You say what you like, I refine and build: copy, photos, mobile-first pages that load instantly — in your language, with updates along the way.",
+      "proc.s3H3": "Launch & care",
+      "proc.s3P": "Your site goes live on your own domain. Afterwards the care plan keeps it current — or you take the keys and run it yourself.",
       "services.eyebrow": "Services", "services.h2": "One clear offer, start to finish.",
       "services.s1H3": "Website design & build",
       "services.s1P": "A fast, mobile-first website designed around what your customers actually do: call, book, or visit. Copywriting help, SEO basics and launch on your own domain included.",
@@ -422,17 +539,30 @@
       "hero.h1": "Klare, schnelle Websites, die aus <em>Suchanfragen Kunden</em> machen.",
       "hero.p": "Ich gestalte und baue Websites für kleine und lokale Unternehmen — von Hand gebaute Seiten, die sofort laden, nach Ihrem Unternehmen aussehen und dafür sorgen, dass Menschen zum Telefon greifen. Keine Baukästen, kein Ballast, keine Vorlagen, die alle anderen schon haben.",
       "hero.cta1": "Projekte ansehen", "hero.cta2": "Projekt starten",
+      "hero.offer": "★ Kostenloser erster Design-Entwurf Ihrer Startseite — unverbindlich",
       "work.eyebrow": "Ausgewählte Projekte", "work.h2": "Gebaut für Anrufe, nicht nur für Klicks.",
       "work.tagLive": "Kundenprojekt · Live",
       "work.featureH3": "M.K.T Ćwioro — Transport & Erdarbeiten",
       "work.featureP": "Eine One-Page-Website für ein polnisches Transport- und Erdbauunternehmen: Leistungen, Maschinen, Einsatzgebiet und Bewertungen — jede Sektion führt zu einer einzigen Aktion: dem Anruf. Gestartet auf der eigenen Domain des Kunden.",
       "work.visit": "cwioro-robotyziemne.pl besuchen →",
       "work.tagConcept": "Konzeptdesign", "work.tagConcept2": "Konzeptdesign",
+      "work.tagConcept3": "Konzeptdesign", "work.tagConcept4": "Konzeptdesign",
       "work.c1H3": "Sanitär & Leckortung — Wrocław",
       "work.c1P": "Notfall-orientiertes Layout: Die Telefonnummer ist nie mehr als einen Blick entfernt.",
       "work.c2H3": "Badausstattung & Sanitärgeschäft",
       "work.c2P": "Marineblau und Messing — ein Auftritt für einen Familienbetrieb mit 40 Jahren Handwerkstradition.",
+      "work.c3H3": "Café & mobile Cocktailbar — Berlin",
+      "work.c3P": "Retro-Plakatdesign für ein Fenster-Café in Friedrichshain: große Typo, Sticker, Polaroids.",
+      "work.c4H3": "Yogastudio — Prenzlauer Berg",
+      "work.c4P": "Ruhiges, editoriales Design für ein Studio mit Zahl-was-du-kannst-Prinzip.",
       "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
+      "proc.eyebrow": "So läuft's", "proc.h2": "Von der ersten Nachricht bis zum Launch — drei Schritte.",
+      "proc.s1H3": "Kostenloser erster Entwurf",
+      "proc.s1P": "Erzählen Sie mir, was Sie tun und wo. Sie bekommen einen kostenlosen Design-Entwurf Ihrer Startseite — Sie riskieren nichts außer der Zeit, eine E-Mail zu lesen.",
+      "proc.s2H3": "Design & Umsetzung",
+      "proc.s2P": "Sie sagen, was Ihnen gefällt; ich verfeinere und baue: Texte, Fotos, mobile-first Seiten, die sofort laden — in Ihrer Sprache, mit Updates zwischendurch.",
+      "proc.s3H3": "Launch & Betreuung",
+      "proc.s3P": "Ihre Website geht auf Ihrer eigenen Domain live. Danach hält das Betreuungspaket sie aktuell — oder Sie übernehmen selbst.",
       "services.eyebrow": "Leistungen", "services.h2": "Ein klares Angebot, von Anfang bis Ende.",
       "services.s1H3": "Webdesign & Umsetzung",
       "services.s1P": "Eine schnelle, mobile-first Website, gestaltet um das, was Ihre Kunden wirklich tun: anrufen, buchen oder vorbeikommen. Hilfe beim Text, SEO-Grundlagen und Launch auf Ihrer eigenen Domain inklusive.",
@@ -460,17 +590,30 @@
       "hero.h1": "Przejrzyste, szybkie strony, które zamieniają <em>wyszukiwania w klientów</em>.",
       "hero.p": "Projektuję i buduję strony internetowe dla małych, lokalnych firm — pisane ręcznie strony, które ładują się natychmiast, wyglądają jak Twoja firma i sprawiają, że ludzie sięgają po telefon. Bez kreatorów, bez zbędnych dodatków, bez szablonów, które mają już wszyscy.",
       "hero.cta1": "Zobacz realizacje", "hero.cta2": "Zacznij projekt",
+      "hero.offer": "★ Bezpłatny wstępny projekt Twojej strony głównej — bez zobowiązań",
       "work.eyebrow": "Wybrane realizacje", "work.h2": "Budowane tak, żeby dzwonili — nie tylko klikali.",
       "work.tagLive": "Realizacja · Online",
       "work.featureH3": "M.K.T Ćwioro — Transport i Roboty Ziemne",
       "work.featureP": "Jednostronicowa witryna dla firmy transportowo-ziemnej: usługi, maszyny, zasięg działania i opinie — każda sekcja prowadzi do jednego działania: telefonu. Uruchomiona na własnej domenie klienta.",
       "work.visit": "Zobacz cwioro-robotyziemne.pl →",
       "work.tagConcept": "Projekt koncepcyjny", "work.tagConcept2": "Projekt koncepcyjny",
+      "work.tagConcept3": "Projekt koncepcyjny", "work.tagConcept4": "Projekt koncepcyjny",
       "work.c1H3": "Hydraulik i wykrywanie wycieków — Wrocław",
       "work.c1P": "Układ „awaryjny”: numer telefonu zawsze w zasięgu wzroku.",
       "work.c2H3": "Sklep z armaturą i instalacjami",
       "work.c2P": "Granat i mosiądz — witryna dla rodzinnej firmy z 40-letnią tradycją.",
+      "work.c3H3": "Kawiarnia i mobilny bar koktajlowy — Berlin",
+      "work.c3P": "Retro plakatowy styl dla kawiarni „z okna” w Friedrichshain: duża typografia, naklejki, polaroidy.",
+      "work.c4H3": "Studio jogi — Prenzlauer Berg",
+      "work.c4P": "Spokojny, magazynowy styl dla studia, w którym płacisz tyle, ile możesz.",
       "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
+      "proc.eyebrow": "Jak to działa", "proc.h2": "Od pierwszej wiadomości do startu — trzy kroki.",
+      "proc.s1H3": "Bezpłatny pierwszy projekt",
+      "proc.s1P": "Napisz, czym się zajmujesz i gdzie działasz. Odeślę bezpłatny projekt Twojej strony głównej — ryzykujesz tylko czas potrzebny na przeczytanie jednego maila.",
+      "proc.s2H3": "Projekt i budowa",
+      "proc.s2P": "Mówisz, co Ci się podoba; ja dopracowuję i buduję: teksty, zdjęcia, szybkie strony mobile-first — w Twoim języku, z podglądem postępów.",
+      "proc.s3H3": "Start i opieka",
+      "proc.s3P": "Strona rusza na Twojej własnej domenie. Potem pakiet opieki dba o aktualność — albo przejmujesz stery.",
       "services.eyebrow": "Oferta", "services.h2": "Jedna przejrzysta oferta, od początku do końca.",
       "services.s1H3": "Projekt i budowa strony",
       "services.s1P": "Szybka strona projektowana z myślą o telefonie, wokół tego, co naprawdę robią Twoi klienci: dzwonią, rezerwują albo przychodzą. W cenie pomoc przy tekstach, podstawy SEO i start na Twojej własnej domenie.",
