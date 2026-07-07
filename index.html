@@ -158,7 +158,12 @@
       overflow: hidden; text-decoration: none; transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
     .concept:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
-    .concept img { aspect-ratio: 16 / 9; object-fit: cover; object-position: top; width: 100%; }
+    .concept img { aspect-ratio: 16 / 9; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
+    .concept:hover img { transform: scale(1.03); }
+    .concept-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; }
+    .concept-wide img { height: 100%; min-height: 300px; aspect-ratio: auto; }
+    .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 34px 36px; }
+    .concept-wide h3 { font-size: 1.3rem; }
     .concept .pad { padding: 22px 24px 26px; }
     .concept h3 { font-size: 1.12rem; margin: 12px 0 8px; }
     .concept p { color: var(--muted); font-size: 0.93rem; }
@@ -217,6 +222,9 @@
       .feature .shot { min-height: 230px; position: relative; }
       .feature .shot img { position: relative; height: auto; }
       .concepts, .services { grid-template-columns: 1fr; }
+      .concept-wide { grid-template-columns: 1fr; }
+      .concept-wide img { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+      .concept-wide .pad { padding: 22px 24px 26px; }
       .about-grid { grid-template-columns: 1fr; gap: 30px; }
       .nav-links a:not(.btn) { display: none; }
       .nav-links { gap: 12px; }
@@ -270,8 +278,8 @@
       </div>
     </div>
     <div class="stack" aria-hidden="true">
-      <img src="assets/bobmurphy-hero.jpg" alt="" loading="eager">
-      <img src="assets/greenyoga-hero.jpg" alt="" loading="eager">
+      <img src="assets/yasmin-hero.jpg" alt="" loading="eager">
+      <img src="assets/leos-hero.jpg" alt="" loading="eager">
       <img src="assets/minikoparka-hero.jpg" alt="" loading="eager">
     </div>
   </div>
@@ -301,6 +309,30 @@
     </div>
 
     <div class="concepts">
+      <a class="concept concept-wide reveal" href="https://bartxs.github.io/demo/yasmin/" target="_blank" rel="noopener">
+        <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept7">Concept design · New</span>
+          <h3 data-i18n="work.c7H3">Flower shop — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/leos/" target="_blank" rel="noopener">
+        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
+          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
+          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
+        <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
+          <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
+          <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
+        </div>
+      </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
         <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
         <div class="pad">
@@ -504,6 +536,14 @@
       "work.c3P": "A retro menu-board poster look for a window café in Friedrichshain.",
       "work.c4H3": "Yoga studio — Prenzlauer Berg",
       "work.c4P": "Calm, editorial design for a studio where you pay what you can afford.",
+      "work.tagConcept5": "Concept design", "work.tagConcept6": "Concept design",
+      "work.tagConcept7": "Concept design · New",
+      "work.c5H3": "Georgian bakery — Wrocław",
+      "work.c5P": "A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.",
+      "work.c6H3": "All-day café — Berlin",
+      "work.c6P": "Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.",
+      "work.c7H3": "Flower shop — Friedrichshain, Berlin",
+      "work.c7P": "A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.",
       "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
       "proc.eyebrow": "How it works", "proc.h2": "From first message to launch — three steps.",
       "proc.s1H3": "Free first look",
@@ -555,6 +595,14 @@
       "work.c3P": "Retro-Plakatdesign für ein Fenster-Café in Friedrichshain: große Typo, Sticker, Polaroids.",
       "work.c4H3": "Yogastudio — Prenzlauer Berg",
       "work.c4P": "Ruhiges, editoriales Design für ein Studio mit Zahl-was-du-kannst-Prinzip.",
+      "work.tagConcept5": "Konzeptdesign", "work.tagConcept6": "Konzeptdesign",
+      "work.tagConcept7": "Konzeptdesign · Neu",
+      "work.c5H3": "Georgische Bäckerei — Wrocław",
+      "work.c5P": "Bento-Mosaik-Hero und Scroll-Snap-Speisekarte für eine Bäckerei auf dem Weg zu fünf Filialen.",
+      "work.c6H3": "Tagescafé — Berlin",
+      "work.c6P": "Morgentisch-Design: runde Tellerfotos, Delfter Blau und eine Karte, die dem Tagesverlauf folgt.",
+      "work.c7H3": "Blumenladen — Friedrichshain, Berlin",
+      "work.c7P": "Blumenmarkt-Editorial — tiefes Grün, Kraftpapier-Anhänger und Bewertungen als Geschenkkärtchen — für den beliebtesten Blumenladen im Kiez.",
       "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
       "proc.eyebrow": "So läuft's", "proc.h2": "Von der ersten Nachricht bis zum Launch — drei Schritte.",
       "proc.s1H3": "Kostenloser erster Entwurf",
@@ -606,6 +654,14 @@
       "work.c3P": "Retro plakatowy styl dla kawiarni „z okna” w Friedrichshain: duża typografia, naklejki, polaroidy.",
       "work.c4H3": "Studio jogi — Prenzlauer Berg",
       "work.c4P": "Spokojny, magazynowy styl dla studia, w którym płacisz tyle, ile możesz.",
+      "work.tagConcept5": "Projekt koncepcyjny", "work.tagConcept6": "Projekt koncepcyjny",
+      "work.tagConcept7": "Projekt koncepcyjny · Nowy",
+      "work.c5H3": "Gruzińska piekarnia — Wrocław",
+      "work.c5P": "Mozaika bento i menu ze scroll-snap dla piekarni rozrastającej się do pięciu lokali.",
+      "work.c6H3": "Kawiarnia śniadaniowa — Berlin",
+      "work.c6P": "Projekt w duchu porannego stołu: okrągłe zdjęcia talerzy, błękit delft i menu płynące z porami dnia.",
+      "work.c7H3": "Kwiaciarnia — Berlin Friedrichshain",
+      "work.c7P": "Kwiatowy targ w wersji editorial — głęboka zieleń, etykiety z papieru kraft i opinie jak bileciki do bukietów — dla najbardziej lubianej kwiaciarni w okolicy.",
       "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
       "proc.eyebrow": "Jak to działa", "proc.h2": "Od pierwszej wiadomości do startu — trzy kroki.",
       "proc.s1H3": "Bezpłatny pierwszy projekt",
