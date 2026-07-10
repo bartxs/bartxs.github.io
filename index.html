@@ -152,11 +152,11 @@
     .feature .info .visit { margin-top: 22px; font-weight: 600; text-decoration: none; color: var(--accent); }
     .feature .info .visit:hover { text-decoration: underline; }
 
-    .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+    .concepts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 20px; }
     .concept {
       background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
       overflow: hidden; text-decoration: none; transition: transform 0.18s ease, box-shadow 0.18s ease;
-      display: flex; flex-direction: column;
+      display: flex; flex-direction: column; grid-column: span 2;
     }
     .concept:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
     .concept img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
@@ -165,11 +165,12 @@
     .concept .tag { margin-bottom: 12px; }
     .concept h3 { font-size: 1.02rem; margin: 0 0 6px; }
     .concept p { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
-    .concept-big { grid-column: span 2; grid-row: span 2; }
-    .concept-big img { flex: 1; min-height: 0; height: 100%; aspect-ratio: auto; }
-    .concept-big .pad { padding: 24px 28px 26px; }
-    .concept-big h3 { font-size: 1.3rem; }
-    .concept-big p { font-size: 0.95rem; }
+    .concept-half { grid-column: span 3; }
+    .concept-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; }
+    .concept-wide img { height: 100%; min-height: 280px; aspect-ratio: auto; }
+    .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 30px 32px; }
+    .concept-wide h3 { font-size: 1.3rem; }
+    .concept-wide p { font-size: 0.95rem; }
     .work-note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; max-width: 70ch; }
 
     /* ---------- services + process ---------- */
@@ -220,8 +221,8 @@
     /* ---------- responsive ---------- */
     @media (max-width: 1020px) {
       .concepts { grid-template-columns: 1fr 1fr; }
-      .concept-big { grid-column: 1 / -1; grid-row: auto; }
-      .concept-big img { flex: none; height: auto; aspect-ratio: 16 / 9; }
+      .concept, .concept-half { grid-column: span 1; }
+      .concept-wide { grid-column: 1 / -1; }
     }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 0; }
@@ -232,6 +233,9 @@
       .services { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 30px; }
       .concepts { grid-template-columns: 1fr; }
+      .concept-wide { grid-template-columns: 1fr; }
+      .concept-wide img { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+      .concept-wide .pad { padding: 18px 20px 20px; }
       .nav-links a:not(.btn) { display: none; }
       .nav-links { gap: 12px; }
       .hero { padding: 68px 0 56px; }
@@ -283,10 +287,11 @@
         <span class="lang">Polski</span>
       </div>
     </div>
+    <!-- static collage — user's picks, do NOT rotate with new projects -->
     <div class="stack" aria-hidden="true">
-      <img src="assets/strandt-hero.jpg" alt="" loading="eager">
+      <img src="assets/yasmin-hero.jpg" alt="" loading="eager">
       <img src="assets/blackcat-hero.jpg" alt="" loading="eager">
-      <img src="assets/minikoparka-hero.jpg" alt="" loading="eager">
+      <img src="assets/leos-hero.jpg" alt="" loading="eager">
     </div>
   </div>
 </header>
@@ -315,14 +320,6 @@
     </div>
 
     <div class="concepts">
-      <a class="concept concept-big reveal" href="https://bartxs.github.io/demo/strandt/" target="_blank" rel="noopener">
-        <img src="assets/strandt-tall.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept11">Concept design · New</span>
-          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
-        </div>
-      </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/ayaz/" target="_blank" rel="noopener">
         <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
         <div class="pad">
@@ -339,12 +336,12 @@
           <p data-i18n="work.c9P">Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.</p>
         </div>
       </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/kraft/" target="_blank" rel="noopener">
-        <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/leos/" target="_blank" rel="noopener">
+        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
-          <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
-          <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
+          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
+          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/yasmin/" target="_blank" rel="noopener">
@@ -355,14 +352,6 @@
           <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
         </div>
       </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/leos/" target="_blank" rel="noopener">
-        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
-          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
-          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
-        </div>
-      </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/green-yoga/" target="_blank" rel="noopener">
         <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
         <div class="pad">
@@ -371,7 +360,23 @@
           <p data-i18n="work.c4P">Calm, editorial design for a studio where you pay what you can afford.</p>
         </div>
       </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/kraft/" target="_blank" rel="noopener">
+        <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
+          <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
+          <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
+        </div>
+      </a>
+      <a class="concept concept-wide reveal" href="https://bartxs.github.io/demo/strandt/" target="_blank" rel="noopener">
+        <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept11">Concept design · New</span>
+          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
+        </div>
+      </a>
+      <a class="concept concept-half reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
         <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
         <div class="pad">
           <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
@@ -379,7 +384,7 @@
           <p data-i18n="work.c3P">A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.</p>
         </div>
       </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
+      <a class="concept concept-half reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
         <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
         <div class="pad">
           <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
