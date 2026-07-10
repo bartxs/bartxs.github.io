@@ -165,7 +165,6 @@
     .concept .tag { margin-bottom: 12px; }
     .concept h3 { font-size: 1.02rem; margin: 0 0 6px; }
     .concept p { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
-    .concept-half { grid-column: span 3; }
     .concept-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; }
     .concept-wide img { height: 100%; min-height: 280px; aspect-ratio: auto; }
     .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 30px 32px; }
@@ -221,7 +220,7 @@
     /* ---------- responsive ---------- */
     @media (max-width: 1020px) {
       .concepts { grid-template-columns: 1fr 1fr; }
-      .concept, .concept-half { grid-column: span 1; }
+      .concept { grid-column: span 1; }
       .concept-wide { grid-column: 1 / -1; }
     }
     @media (max-width: 900px) {
@@ -376,7 +375,7 @@
           <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
         </div>
       </a>
-      <a class="concept concept-half reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/bob-murphy/" target="_blank" rel="noopener">
         <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
         <div class="pad">
           <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
@@ -384,12 +383,20 @@
           <p data-i18n="work.c3P">A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.</p>
         </div>
       </a>
-      <a class="concept concept-half reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
         <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
         <div class="pad">
           <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
           <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
           <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/mikmat-instal/" target="_blank" rel="noopener">
+        <img src="assets/mikmat-hero.jpg" alt="MikMat Instal plumbing concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept12">Concept design</span>
+          <h3 data-i18n="work.c12H3">Plumbing &amp; leak detection — Wrocław</h3>
+          <p data-i18n="work.c12P">A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.</p>
         </div>
       </a>
     </div>
@@ -557,6 +564,9 @@
       "work.tagConcept8": "Concept design", "work.tagConcept9": "Concept design",
       "work.tagConcept10": "Concept design",
       "work.tagConcept11": "Concept design · New",
+      "work.tagConcept12": "Concept design",
+      "work.c12H3": "Plumbing & leak detection — Wrocław",
+      "work.c12P": "A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.",
       "work.c11H3": "Dental practice — Friedrichshain, Berlin",
       "work.c11P": "A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.",
       "work.c10H3": "Barber shop — Prenzlauer Berg, Berlin",
@@ -622,6 +632,9 @@
       "work.tagConcept8": "Konzeptdesign", "work.tagConcept9": "Konzeptdesign",
       "work.tagConcept10": "Konzeptdesign",
       "work.tagConcept11": "Konzeptdesign · Neu",
+      "work.tagConcept12": "Konzeptdesign",
+      "work.c12H3": "Sanitär & Leckortung — Wrocław (Breslau)",
+      "work.c12P": "Ein sachliches Handwerker-Design in Anthrazit und Petrol — aufgebaut um Notdienst-Anrufe und Leckortung für einen 5,0★-Sanitärbetrieb.",
       "work.c11H3": "Zahnarztpraxis — Friedrichshain, Berlin",
       "work.c11P": "Ein Fresh-Smile-Design in zartem Himmelblau — organisch beschnittenes Hero-Foto, schwebende Termin-Badges und ein Besuch in vier Schritten als Zeitstrahl, für eine Familienpraxis mit Vertrauen seit 1992.",
       "work.c10H3": "Barbershop — Prenzlauer Berg, Berlin",
@@ -687,6 +700,9 @@
       "work.tagConcept8": "Projekt koncepcyjny", "work.tagConcept9": "Projekt koncepcyjny",
       "work.tagConcept10": "Projekt koncepcyjny",
       "work.tagConcept11": "Projekt koncepcyjny · Nowy",
+      "work.tagConcept12": "Projekt koncepcyjny",
+      "work.c12H3": "Hydraulik i wykrywanie wycieków — Wrocław",
+      "work.c12P": "Rzeczowy, fachowy projekt w graficie i morskiej zieleni — zbudowany wokół pilnych zgłoszeń i diagnostyki wycieków dla firmy hydraulicznej z oceną 5,0★.",
       "work.c11H3": "Gabinet stomatologiczny — Berlin Friedrichshain",
       "work.c11P": "Projekt „świeżego uśmiechu” w bladym błękicie — zdjęcie w organicznym kadrze, pływające plakietki rezerwacji i wizyta w czterech krokach na osi czasu, dla rodzinnego gabinetu cieszącego się zaufaniem od 1992 roku.",
       "work.c10H3": "Barbershop — Berlin Prenzlauer Berg",
