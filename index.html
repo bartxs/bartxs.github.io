@@ -152,21 +152,24 @@
     .feature .info .visit { margin-top: 22px; font-weight: 600; text-decoration: none; color: var(--accent); }
     .feature .info .visit:hover { text-decoration: underline; }
 
-    .concepts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
     .concept {
       background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
       overflow: hidden; text-decoration: none; transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: flex; flex-direction: column;
     }
     .concept:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
-    .concept img { aspect-ratio: 16 / 9; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
+    .concept img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
     .concept:hover img { transform: scale(1.03); }
-    .concept-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; }
-    .concept-wide img { height: 100%; min-height: 300px; aspect-ratio: auto; }
-    .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 34px 36px; }
-    .concept-wide h3 { font-size: 1.3rem; }
-    .concept .pad { padding: 22px 24px 26px; }
-    .concept h3 { font-size: 1.12rem; margin: 12px 0 8px; }
-    .concept p { color: var(--muted); font-size: 0.93rem; }
+    .concept .pad { padding: 18px 20px 20px; }
+    .concept .tag { margin-bottom: 12px; }
+    .concept h3 { font-size: 1.02rem; margin: 0 0 6px; }
+    .concept p { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+    .concept-big { grid-column: span 2; grid-row: span 2; }
+    .concept-big img { flex: 1; min-height: 0; height: 100%; aspect-ratio: auto; }
+    .concept-big .pad { padding: 24px 28px 26px; }
+    .concept-big h3 { font-size: 1.3rem; }
+    .concept-big p { font-size: 0.95rem; }
     .work-note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; max-width: 70ch; }
 
     /* ---------- services + process ---------- */
@@ -215,17 +218,20 @@
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
     /* ---------- responsive ---------- */
+    @media (max-width: 1020px) {
+      .concepts { grid-template-columns: 1fr 1fr; }
+      .concept-big { grid-column: 1 / -1; grid-row: auto; }
+      .concept-big img { flex: none; height: auto; aspect-ratio: 16 / 9; }
+    }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 0; }
       .stack { display: none; }
       .feature { grid-template-columns: 1fr; }
       .feature .shot { min-height: 230px; position: relative; }
       .feature .shot img { position: relative; height: auto; }
-      .concepts, .services { grid-template-columns: 1fr; }
-      .concept-wide { grid-template-columns: 1fr; }
-      .concept-wide img { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
-      .concept-wide .pad { padding: 22px 24px 26px; }
+      .services { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .concepts { grid-template-columns: 1fr; }
       .nav-links a:not(.btn) { display: none; }
       .nav-links { gap: 12px; }
       .hero { padding: 68px 0 56px; }
@@ -278,7 +284,7 @@
       </div>
     </div>
     <div class="stack" aria-hidden="true">
-      <img src="assets/ayaz-hero.jpg" alt="" loading="eager">
+      <img src="assets/strandt-hero.jpg" alt="" loading="eager">
       <img src="assets/blackcat-hero.jpg" alt="" loading="eager">
       <img src="assets/minikoparka-hero.jpg" alt="" loading="eager">
     </div>
@@ -309,10 +315,18 @@
     </div>
 
     <div class="concepts">
-      <a class="concept concept-wide reveal" href="https://bartxs.github.io/demo/ayaz/" target="_blank" rel="noopener">
+      <a class="concept concept-big reveal" href="https://bartxs.github.io/demo/strandt/" target="_blank" rel="noopener">
+        <img src="assets/strandt-tall.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept11">Concept design · New</span>
+          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/ayaz/" target="_blank" rel="noopener">
         <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept10">Concept design · New</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept10">Concept design</span>
           <h3 data-i18n="work.c10H3">Barber shop — Prenzlauer Berg, Berlin</h3>
           <p data-i18n="work.c10P">A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.</p>
         </div>
@@ -325,20 +339,12 @@
           <p data-i18n="work.c9P">Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.</p>
         </div>
       </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/leos/" target="_blank" rel="noopener">
-        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/kraft/" target="_blank" rel="noopener">
+        <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
-          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
-          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
-        <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
-          <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
-          <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
+          <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
+          <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/yasmin/" target="_blank" rel="noopener">
@@ -349,12 +355,12 @@
           <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
         </div>
       </a>
-      <a class="concept concept-wide reveal" href="https://bartxs.github.io/demo/kraft/" target="_blank" rel="noopener">
-        <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
+      <a class="concept reveal" href="https://bartxs.github.io/demo/leos/" target="_blank" rel="noopener">
+        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
-          <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
-          <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
+          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
+          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://bartxs.github.io/demo/green-yoga/" target="_blank" rel="noopener">
@@ -371,6 +377,14 @@
           <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
           <h3 data-i18n="work.c3H3">Café &amp; mobile cocktail bar — Berlin</h3>
           <p data-i18n="work.c3P">A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://bartxs.github.io/demo/puri/" target="_blank" rel="noopener">
+        <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
+          <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
+          <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
         </div>
       </a>
     </div>
@@ -536,7 +550,10 @@
       "work.visit": "Visit cwioro-robotyziemne.pl →",
       "work.tagConcept3": "Concept design", "work.tagConcept4": "Concept design",
       "work.tagConcept8": "Concept design", "work.tagConcept9": "Concept design",
-      "work.tagConcept10": "Concept design · New",
+      "work.tagConcept10": "Concept design",
+      "work.tagConcept11": "Concept design · New",
+      "work.c11H3": "Dental practice — Friedrichshain, Berlin",
+      "work.c11P": "A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.",
       "work.c10H3": "Barber shop — Prenzlauer Berg, Berlin",
       "work.c10P": "A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.",
       "work.c8H3": "Ski & bike shop — Wrocław",
@@ -598,7 +615,10 @@
       "work.visit": "cwioro-robotyziemne.pl besuchen →",
       "work.tagConcept3": "Konzeptdesign", "work.tagConcept4": "Konzeptdesign",
       "work.tagConcept8": "Konzeptdesign", "work.tagConcept9": "Konzeptdesign",
-      "work.tagConcept10": "Konzeptdesign · Neu",
+      "work.tagConcept10": "Konzeptdesign",
+      "work.tagConcept11": "Konzeptdesign · Neu",
+      "work.c11H3": "Zahnarztpraxis — Friedrichshain, Berlin",
+      "work.c11P": "Ein Fresh-Smile-Design in zartem Himmelblau — organisch beschnittenes Hero-Foto, schwebende Termin-Badges und ein Besuch in vier Schritten als Zeitstrahl, für eine Familienpraxis mit Vertrauen seit 1992.",
       "work.c10H3": "Barbershop — Prenzlauer Berg, Berlin",
       "work.c10P": "Ein Letterpress-Plakat in Barber-Pole-Rot, Weiß und Marineblau — riesige Displayschrift, eine Preisliste in Rot auf Weiß und eine Polaroid-Wand für einen 5,0★-Barbershop.",
       "work.c8H3": "Ski- & Fahrradladen — Wrocław (Breslau)",
@@ -660,7 +680,10 @@
       "work.visit": "Zobacz cwioro-robotyziemne.pl →",
       "work.tagConcept3": "Projekt koncepcyjny", "work.tagConcept4": "Projekt koncepcyjny",
       "work.tagConcept8": "Projekt koncepcyjny", "work.tagConcept9": "Projekt koncepcyjny",
-      "work.tagConcept10": "Projekt koncepcyjny · Nowy",
+      "work.tagConcept10": "Projekt koncepcyjny",
+      "work.tagConcept11": "Projekt koncepcyjny · Nowy",
+      "work.c11H3": "Gabinet stomatologiczny — Berlin Friedrichshain",
+      "work.c11P": "Projekt „świeżego uśmiechu” w bladym błękicie — zdjęcie w organicznym kadrze, pływające plakietki rezerwacji i wizyta w czterech krokach na osi czasu, dla rodzinnego gabinetu cieszącego się zaufaniem od 1992 roku.",
       "work.c10H3": "Barbershop — Berlin Prenzlauer Berg",
       "work.c10P": "Letterpressowy plakat w barberskiej czerwieni, bieli i granacie — ogromna typografia, cennik czerwienią na białym i ściana polaroidów dla barbershopu z oceną 5,0★.",
       "work.c8H3": "Sklep narciarsko-rowerowy — Wrocław",
