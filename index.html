@@ -28,9 +28,7 @@
     "knowsLanguage": [ "en", "de", "pl" ]
   }
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="assets/fonts/fonts.css" rel="stylesheet">
   <style>
     :root {
       --paper: #fafaf7;
@@ -214,6 +212,8 @@
 
     footer { border-top: 1px solid var(--line); padding: 26px 0; }
     .foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 0.88rem; }
+    .foot-legal a { color: var(--muted); text-decoration: none; }
+    .foot-legal a:hover { color: var(--ink); text-decoration: underline; }
 
     a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
@@ -542,6 +542,7 @@
 <footer>
   <div class="wrap foot">
     <span data-i18n="footer.left">© 2026 ClearSite Studio — Berlin</span>
+    <span class="foot-legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
     <span data-i18n="footer.right">Websites for local businesses · EN / DE / PL</span>
   </div>
 </footer>
