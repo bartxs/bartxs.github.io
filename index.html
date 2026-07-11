@@ -23,7 +23,7 @@
     "name": "ClearSite Studio",
     "description": "Design and development of fast, clear websites for small and local businesses.",
     "url": "https://clearsitestudio.de/",
-    "email": "b.soltysik90@gmail.com",
+    "email": "info@clearsitestudio.de",
     "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" },
     "areaServed": [ "Germany", "Poland" ],
     "knowsLanguage": [ "en", "de", "pl" ]
@@ -52,7 +52,7 @@
     h1, h2, h3 { font-family: "Sora", sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
     a { color: inherit; }
     img { display: block; max-width: 100%; }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
     .mono {
       font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
       letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
@@ -157,7 +157,7 @@
     }
     .feature blockquote cite { display: block; margin-top: 8px; font-style: normal; font-size: 0.82rem; color: var(--muted); }
 
-    .concepts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 20px; }
+    .concepts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 20px; }
     .concept {
       background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
       overflow: hidden; text-decoration: none; transition: transform 0.18s ease, box-shadow 0.18s ease;
@@ -531,7 +531,7 @@
         Tell me what you do and where — I'll reply with honest advice and, if it's a fit,
         a free first-look design of your homepage. No obligation either way.
       </p>
-      <a class="btn btn-primary" id="mail-cta" href="mailto:b.soltysik90@gmail.com?subject=Website%20enquiry%20—%20ClearSite%20Studio">b.soltysik90@gmail.com</a>
+      <a class="btn btn-primary" id="mail-cta" href="mailto:info@clearsitestudio.de?subject=Website%20enquiry%20—%20ClearSite%20Studio">info@clearsitestudio.de</a>
       <div class="langs">
         <span class="lang">English</span>
         <span class="lang">Deutsch</span>
@@ -783,7 +783,7 @@
       if (t) el.innerHTML = t;
     });
     const mail = document.getElementById("mail-cta");
-    mail.href = "mailto:b.soltysik90@gmail.com?subject=" + encodeURIComponent(dict._mailSubject);
+    mail.href = "mailto:info@clearsitestudio.de?subject=" + encodeURIComponent(dict._mailSubject);
     document.querySelectorAll(".lang-switch button").forEach((b) => {
       b.classList.toggle("active", b.dataset.setlang === lang);
     });
