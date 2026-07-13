@@ -112,14 +112,23 @@
     .offer:hover { border-color: var(--accent); }
     @media (min-width: 1080px) { .offer { white-space: nowrap; } }
     .stack { position: relative; height: 470px; }
-    .stack img {
-      position: absolute; width: 66%; border-radius: 10px;
-      border: 1px solid var(--line); background: #fff;
+    .stack-card {
+      position: absolute; width: 66%; display: block; overflow: hidden;
+      border-radius: 10px; border: 1px solid var(--line); background: #fff;
       box-shadow: 0 24px 60px -18px rgba(20, 22, 26, 0.28);
+      transform: rotate(var(--rot));
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
+      will-change: transform;
     }
-    .stack img:nth-child(1) { top: 0; left: 0; transform: rotate(-2deg); z-index: 3; }
-    .stack img:nth-child(2) { top: 122px; right: 0; transform: rotate(2.2deg); z-index: 2; }
-    .stack img:nth-child(3) { bottom: 0; left: 8%; transform: rotate(-1.2deg); z-index: 1; }
+    .stack-card img { display: block; width: 100%; }
+    .stack-card:nth-child(1) { top: 0; left: 0; --rot: -2deg; z-index: 3; }
+    .stack-card:nth-child(2) { top: 122px; right: 0; --rot: 2.2deg; z-index: 2; }
+    .stack-card:nth-child(3) { bottom: 0; left: 8%; --rot: -1.2deg; z-index: 1; }
+    .stack-card:hover, .stack-card:focus-visible {
+      transform: rotate(0deg) translateY(-8px) scale(1.05);
+      box-shadow: 0 36px 74px -20px rgba(20, 22, 26, 0.42);
+    }
+    @media (prefers-reduced-motion: reduce) { .stack-card { transition: none; } }
     .langs { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
     .lang {
       font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--muted);
@@ -132,64 +141,94 @@
     .sec-head h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); margin-top: 10px; }
     .sec-head p { color: var(--muted); margin-top: 12px; max-width: 60ch; }
 
-    /* ---------- work ---------- */
-    .feature {
-      display: grid; grid-template-columns: 1.25fr 1fr; gap: 0; overflow: hidden;
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    /* ---------- project marquee (full grid lives on projects.html) ---------- */
+    .marquee {
+      overflow: hidden; margin-top: 26px;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+              mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
     }
-    .feature .shot { position: relative; min-height: 320px; }
-    .feature .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; position: absolute; inset: 0; }
-    .feature .info { padding: 38px 36px; display: flex; flex-direction: column; justify-content: center; }
-    .tag {
-      display: inline-block; align-self: flex-start; font-family: "IBM Plex Mono", monospace;
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 999px; margin-bottom: 16px;
+    .marquee-track { display: flex; width: max-content; animation: marquee-scroll 60s linear infinite; }
+    .marquee-rev .marquee-track { animation-direction: reverse; animation-duration: 72s; }
+    .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+    @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .m-group { display: flex; gap: 22px; padding-right: 22px; }
+    .m-card {
+      width: 330px; flex: none; background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); overflow: hidden; text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
-    .tag-live { background: #e8f6ec; color: #1d7a3a; }
-    .tag-concept { background: var(--accent-soft); color: var(--accent); }
-    .feature h3 { font-size: 1.45rem; margin-bottom: 12px; }
-    .feature .info p { color: var(--muted); font-size: 0.98rem; }
-    .feature .info .visit { margin-top: 22px; font-weight: 600; text-decoration: none; color: var(--accent); }
-    .feature .info .visit:hover { text-decoration: underline; }
-    .feature blockquote {
-      margin-top: 20px; padding: 2px 0 2px 18px; border-left: 3px solid var(--accent);
-      font-size: 0.95rem; color: var(--ink); font-style: italic;
+    .m-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
+    .m-card img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
+    .m-card .pad { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 13px 16px 15px; min-width: 0; }
+    .m-card .m-title { font-family: "Sora", sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .m-card .go { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--accent); white-space: nowrap; }
+    .work-cta { margin-top: 34px; }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+      .marquee-track { animation: none; }
+      .m-group[aria-hidden="true"] { display: none; }
     }
-    .feature blockquote cite { display: block; margin-top: 8px; font-style: normal; font-size: 0.82rem; color: var(--muted); }
-
-    .concepts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 20px; }
-    .concept {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-      overflow: hidden; text-decoration: none; transition: transform 0.18s ease, box-shadow 0.18s ease;
-      display: flex; flex-direction: column; grid-column: span 2;
-    }
-    .concept:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
-    .concept img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
-    .concept:hover img { transform: scale(1.03); }
-    .concept .pad { padding: 18px 20px 20px; }
-    .concept .tag { margin-bottom: 12px; }
-    .concept h3 { font-size: 1.02rem; margin: 0 0 6px; }
-    .concept p { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
-    .concept-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; }
-    .concept-wide img { height: 100%; min-height: 280px; aspect-ratio: auto; }
-    .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 30px 32px; }
-    .concept-wide h3 { font-size: 1.3rem; }
-    .concept-wide p { font-size: 0.95rem; }
     .work-note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; max-width: 70ch; }
 
-    /* ---------- services + process ---------- */
+    /* ---------- services (editorial index rows) ---------- */
     #services { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .svc-list { border-top: 1px solid var(--line); margin-top: 8px; }
+    .svc-row {
+      display: grid; grid-template-columns: 130px 1fr 1.35fr; gap: 36px;
+      padding: 42px 0 44px; border-bottom: 1px solid var(--line); align-items: start;
+    }
+    .svc-num {
+      font-family: "Sora", sans-serif; font-weight: 700; line-height: 0.9;
+      font-size: clamp(2.8rem, 4.5vw, 4rem); letter-spacing: -0.02em;
+      color: #d7defb; -webkit-text-stroke: 1px var(--accent);
+    }
+    .svc-row h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); margin-bottom: 10px; }
+    .svc-meta {
+      display: block; font-family: "IBM Plex Mono", monospace; font-size: 0.72rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); line-height: 1.8;
+    }
+    .svc-row > p { color: var(--muted); font-size: 0.98rem; max-width: 52ch; }
+    .svc-row .soon { margin-top: 14px; }
+
+    /* ---------- process ---------- */
     #process .service { background: var(--card); }
     .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .service { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; background: var(--paper); }
     .service .num { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-size: 0.8rem; }
     .service h3 { font-size: 1.15rem; margin: 14px 0 10px; }
     .service p { color: var(--muted); font-size: 0.95rem; }
-    .service .soon {
+    .soon {
       display: inline-block; margin-top: 14px; font-family: "IBM Plex Mono", monospace;
       font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--muted); border: 1px dashed var(--line); border-radius: 999px; padding: 4px 10px;
     }
+
+    /* ---------- pricing ---------- */
+    #pricing { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: stretch; margin-top: 14px; }
+    .plan {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 36px 32px 32px; position: relative; display: flex; flex-direction: column;
+    }
+    .plan-lead { border: 1.5px solid var(--accent); box-shadow: 0 20px 48px -24px rgba(37, 71, 232, 0.4); }
+    .plan-flag {
+      position: absolute; top: -13px; left: 28px; background: var(--accent); color: #fff;
+      font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; border-radius: 999px; padding: 5px 13px;
+    }
+    .plan h3 { font-size: 1.22rem; }
+    .plan-price { margin: 16px 0 6px; font-family: "Sora", sans-serif; display: flex; align-items: baseline; gap: 6px; }
+    .plan-price strong { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+    .plan-price .pp-pre, .plan-price .pp-unit { color: var(--muted); font-weight: 500; font-size: 1rem; }
+    .plan-cond { color: var(--muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .plan ul { list-style: none; display: grid; gap: 11px; margin-bottom: 22px; }
+    .plan li { position: relative; padding-left: 26px; font-size: 0.95rem; }
+    .plan li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+    .plan-fine { color: var(--muted); font-size: 0.83rem; line-height: 1.6; margin-bottom: 26px; }
+    .plan .btn { align-self: flex-start; margin-top: auto; }
+    .plans-note { margin-top: 28px; color: var(--muted); font-size: 0.9rem; }
+    .pn-line { display: block; }
+    .pn-line + .pn-line { margin-top: 5px; }
 
     /* ---------- about ---------- */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
@@ -203,7 +242,8 @@
     /* ---------- contact ---------- */
     #contact { padding-bottom: 96px; }
     .contact-card {
-      background: var(--ink); color: #f4f3ef; border-radius: 20px;
+      background: radial-gradient(130% 130% at 18% 12%, #232c50 0%, #171a27 45%, #131419 100%);
+      color: #f4f3ef; border-radius: 20px;
       padding: 64px 48px; text-align: center;
     }
     .contact-card h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); max-width: 22ch; margin: 14px auto 0; }
@@ -225,23 +265,15 @@
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
     /* ---------- responsive ---------- */
-    @media (max-width: 1020px) {
-      .concepts { grid-template-columns: 1fr 1fr; }
-      .concept { grid-column: span 1; }
-      .concept-wide { grid-column: 1 / -1; }
-    }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 0; }
       .stack { display: none; }
-      .feature { grid-template-columns: 1fr; }
-      .feature .shot { min-height: 230px; position: relative; }
-      .feature .shot img { position: relative; height: auto; }
       .services { grid-template-columns: 1fr; }
+      .svc-row { grid-template-columns: 1fr; gap: 12px; padding: 30px 0 32px; }
+      .svc-num { font-size: 2.2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 30px; }
-      .concepts { grid-template-columns: 1fr; }
-      .concept-wide { grid-template-columns: 1fr; }
-      .concept-wide img { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
-      .concept-wide .pad { padding: 18px 20px 20px; }
+      .plans { grid-template-columns: 1fr; gap: 34px; }
+      .m-card { width: 260px; }
       .nav-links a:not(.btn) { display: none; }
       .nav-links { gap: 12px; }
       .hero { padding: 68px 0 56px; }
@@ -259,8 +291,9 @@
   <div class="wrap nav-inner">
     <a class="logo" href="#">ClearSite<span>·</span>Studio</a>
     <div class="nav-links">
-      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="projects.html" data-i18n="nav.work">Projects</a>
       <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
       <a href="#about" data-i18n="nav.about">About</a>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-setlang="en">EN</button>
@@ -293,11 +326,17 @@
         <span class="lang">Polski</span>
       </div>
     </div>
-    <!-- static collage — user's picks, do NOT rotate with new projects -->
-    <div class="stack" aria-hidden="true">
-      <img src="assets/yasmin-hero.jpg" alt="" loading="eager">
-      <img src="assets/blackcat-hero.jpg" alt="" loading="eager">
-      <img src="assets/leos-hero.jpg" alt="" loading="eager">
+    <!-- hero collage — user's pinned picks (Yasmin/BlackCat/Leo's), do NOT swap for new projects -->
+    <div class="stack">
+      <a class="stack-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener" aria-label="Blumenhaus Yasmin — concept design">
+        <img src="assets/yasmin-hero.jpg" alt="" loading="eager">
+      </a>
+      <a class="stack-card" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener" aria-label="Black Cat Tattoo — concept design">
+        <img src="assets/blackcat-hero.jpg" alt="" loading="eager">
+      </a>
+      <a class="stack-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener" aria-label="Leo's café — concept design">
+        <img src="assets/leos-hero.jpg" alt="" loading="eager">
+      </a>
     </div>
   </div>
 </header>
@@ -309,109 +348,110 @@
       <h2 data-i18n="work.h2">Built to bring in calls, not just clicks.</h2>
     </div>
 
-    <div class="feature reveal">
-      <div class="shot">
-        <img src="assets/minikoparka-hero.jpg" alt="M.K.T Tomasz Ćwioro — transport and earthworks website" loading="eager">
+  </div>
+
+  <div class="marquee reveal" aria-label="Concept design previews">
+    <div class="marquee-track">
+      <div class="m-group">
+        <a class="m-card" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener">
+          <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c10H3">Barber shop — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
+          <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
+          <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener">
+          <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener">
+          <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
+        </a>
       </div>
-      <div class="info">
-        <span class="tag tag-live" data-i18n="work.tagLive">Client work · Live</span>
-        <h3 data-i18n="work.featureH3">M.K.T Ćwioro — Transport &amp; Earthworks</h3>
-        <p data-i18n="work.featureP">
-          A one-page site for a Polish transport and earthworks company: services,
-          machinery, coverage area and reviews — every section funnelling to one
-          action, the phone call. Launched on the client's own domain.
-        </p>
-        <blockquote>
-          <span data-i18n="work.featureQuote">"Before, all I had was a classified listing on OLX. Bartosz took care of everything — the domain, the texts, all the rest — and now I have a proper website I simply send to my customers."</span>
-          <cite data-i18n="work.featureCite">Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne</cite>
-        </blockquote>
-        <a class="visit" href="https://cwioro-robotyziemne.pl" target="_blank" rel="noopener" data-i18n="work.visit">Visit cwioro-robotyziemne.pl →</a>
+      <div class="m-group" aria-hidden="true">
+        <a class="m-card" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/ayaz-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c10H3">Barber shop — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/yasmin-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/leos-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/strandt-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/bobmurphy-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
+        </a>
       </div>
     </div>
+  </div>
 
-    <div class="concepts">
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener">
-        <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept10">Concept design</span>
-          <h3 data-i18n="work.c10H3">Barber shop — Prenzlauer Berg, Berlin</h3>
-          <p data-i18n="work.c10P">A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener">
-        <img src="assets/blackcat-hero.jpg" alt="Black Cat tattoo studio concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept9">Concept design</span>
-          <h3 data-i18n="work.c9H3">Tattoo studio — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c9P">Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
-        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
-          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
-          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
-        <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept7">Concept design</span>
-          <h3 data-i18n="work.c7H3">Flower shop — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener">
-        <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept4">Concept design</span>
-          <h3 data-i18n="work.c4H3">Yoga studio — Prenzlauer Berg</h3>
-          <p data-i18n="work.c4P">Calm, editorial design for a studio where you pay what you can afford.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener">
-        <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
-          <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
-          <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
-        </div>
-      </a>
-      <a class="concept concept-wide reveal" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener">
-        <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept11">Concept design · New</span>
-          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener">
-        <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
-          <h3 data-i18n="work.c3H3">Café &amp; mobile cocktail bar — Berlin</h3>
-          <p data-i18n="work.c3P">A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener">
-        <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
-          <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
-          <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener">
-        <img src="assets/mikmat-hero.jpg" alt="MikMat Instal plumbing concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept12">Concept design</span>
-          <h3 data-i18n="work.c12H3">Plumbing &amp; leak detection — Wrocław</h3>
-          <p data-i18n="work.c12P">A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.</p>
-        </div>
-      </a>
+  <div class="marquee marquee-rev reveal" aria-label="More concept design previews">
+    <div class="marquee-track">
+      <div class="m-group">
+        <a class="m-card" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener">
+          <img src="assets/blackcat-hero.jpg" alt="Black Cat tattoo studio concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener">
+          <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener">
+          <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener">
+          <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener">
+          <img src="assets/mikmat-hero.jpg" alt="MikMat Instal plumbing concept design" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c12H3">Plumbing — Wrocław</span><span class="go">→</span></span>
+        </a>
+      </div>
+      <div class="m-group" aria-hidden="true">
+        <a class="m-card" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/blackcat-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/kraft-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/greenyoga-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/puri-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/mikmat-hero.jpg" alt="" loading="lazy">
+          <span class="pad"><span class="m-title" data-i18n="work.c12H3">Plumbing — Wrocław</span><span class="go">→</span></span>
+        </a>
+      </div>
     </div>
+  </div>
 
+  <div class="wrap">
+    <div class="work-cta reveal">
+      <a class="btn btn-ghost" href="projects.html" data-i18n="work.allBtn">See all projects →</a>
+    </div>
     <p class="work-note reveal" data-i18n="work.note">
       Concept designs are working prototypes created for real local businesses, using
       licensed stock photography. The full build — with your photos, your colours and
@@ -426,33 +466,42 @@
       <span class="mono" data-i18n="services.eyebrow">Services</span>
       <h2 data-i18n="services.h2">One clear offer, start to finish.</h2>
     </div>
-    <div class="services">
-      <div class="service reveal">
-        <span class="num">01</span>
-        <h3 data-i18n="services.s1H3">Website design &amp; build</h3>
+    <div class="svc-list">
+      <div class="svc-row reveal">
+        <span class="svc-num" aria-hidden="true">01</span>
+        <div class="svc-head">
+          <h3 data-i18n="services.s1H3">Website design &amp; build</h3>
+          <span class="svc-meta" data-i18n="services.s1Meta">Design · Copy · SEO basics · Your own domain</span>
+        </div>
         <p data-i18n="services.s1P">
           A fast, mobile-first website designed around what your customers actually do:
           call, book, or visit. Copywriting help, SEO basics and launch on your own
           domain included.
         </p>
       </div>
-      <div class="service reveal">
-        <span class="num">02</span>
-        <h3 data-i18n="services.s2H3">Care plan</h3>
+      <div class="svc-row reveal">
+        <span class="svc-num" aria-hidden="true">02</span>
+        <div class="svc-head">
+          <h3 data-i18n="services.s2H3">Care plan</h3>
+          <span class="svc-meta" data-i18n="services.s2Meta">Updates · Backups · 1 h changes / month</span>
+        </div>
         <p data-i18n="services.s2P">
           Your site stays current without you thinking about it — monthly text and photo
           updates, price and opening-hours changes, and someone to message when anything
           needs doing.
         </p>
       </div>
-      <div class="service reveal">
-        <span class="num">03</span>
-        <h3 data-i18n="services.s3H3">Content &amp; visibility</h3>
+      <div class="svc-row reveal">
+        <span class="svc-num" aria-hidden="true">03</span>
+        <div class="svc-head">
+          <h3 data-i18n="services.s3H3">Content &amp; visibility</h3>
+          <span class="svc-meta" data-i18n="services.s3Meta">Google Business Profile · Promo graphics · Posts</span>
+          <span class="soon" data-i18n="services.soon">Launching soon</span>
+        </div>
         <p data-i18n="services.s3P">
           Google Business Profile tune-ups, seasonal promo graphics and post content that
           keeps your business showing up where locals are searching.
         </p>
-        <span class="soon" data-i18n="services.soon">Launching soon</span>
       </div>
     </div>
   </div>
@@ -490,6 +539,52 @@
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="mono" data-i18n="pricing.eyebrow">Pricing</span>
+      <h2 data-i18n="pricing.h2">You see your finished website before you pay a cent.</h2>
+      <p data-i18n="pricing.p">First the design, then the decision. Two clear ways to get your website — both complete, both with your domain in your name.</p>
+    </div>
+    <div class="plans">
+      <div class="plan plan-lead reveal">
+        <span class="plan-flag" data-i18n="pricing.aboFlag">Launch price</span>
+        <h3 data-i18n="pricing.aboH3">Website subscription</h3>
+        <div class="plan-price"><strong>49 €</strong><span class="pp-unit" data-i18n="pricing.aboPriceUnit">/month</span></div>
+        <p class="plan-cond" data-i18n="pricing.aboCond">For the first 10 clients — you keep this rate for good. 59 €/month afterwards. 0 € setup cost.</p>
+        <ul>
+          <li data-i18n="pricing.aboLi1">Custom design — you see the finished draft before you commit</li>
+          <li data-i18n="pricing.aboLi2">Your own domain, hosting, SSL &amp; e-mail forwarding</li>
+          <li data-i18n="pricing.aboLi3">Legal pages included (Impressum &amp; privacy policy)</li>
+          <li data-i18n="pricing.aboLi4">Technical maintenance, updates &amp; backups</li>
+          <li data-i18n="pricing.aboLi5">1 hour of changes every month — texts, photos, prices, hours</li>
+          <li data-i18n="pricing.aboLi6">Google Business Profile setup</li>
+        </ul>
+        <p class="plan-fine" data-i18n="pricing.aboFine">12-month minimum term, then cancel monthly. From month 13 you can buy the site out for 290 € — then it's fully yours. Your domain is registered in your name from day one.</p>
+        <a class="btn btn-primary" href="#contact" data-i18n="pricing.aboCta">Request your free draft</a>
+      </div>
+      <div class="plan reveal">
+        <h3 data-i18n="pricing.kaufH3">Website purchase</h3>
+        <div class="plan-price"><span class="pp-pre" data-i18n="pricing.kaufFrom">from</span><strong>490 €</strong><span class="pp-unit" data-i18n="pricing.kaufUnit">one-time</span></div>
+        <p class="plan-cond" data-i18n="pricing.kaufCond">One-pager 490 € · up to 5 pages 890 € — both incl. 12 months of hosting.</p>
+        <ul>
+          <li data-i18n="pricing.kaufLi1">The site and all content belong to you from day one</li>
+          <li data-i18n="pricing.kaufLi2">Two revision rounds after delivery included</li>
+          <li data-i18n="pricing.kaufLi3">Afterwards 19 €/month for hosting &amp; care — incl. 30 min of changes</li>
+          <li data-i18n="pricing.kaufLi4">Or a free handover — host it yourself with no running costs</li>
+        </ul>
+        <p class="plan-fine" data-i18n="pricing.kaufFine">No subscription, no minimum term. The optional care plan is cancellable monthly.</p>
+        <a class="btn btn-ghost" href="#contact" data-i18n="pricing.kaufCta">Request a quote</a>
+      </div>
+    </div>
+    <p class="plans-note reveal">
+      <span class="pn-line" data-i18n="pricing.note1">All prices are final — as a small business under § 19 UStG I charge no VAT.</span>
+      <span class="pn-line" data-i18n="pricing.note2">Second language (German / Polish / English): +10 €/month on the subscription, or +190 € once with the purchase.</span>
+      <span class="pn-line" data-i18n="pricing.note3">Medical practices, multiple locations or larger projects: individual quote on request.</span>
+    </p>
   </div>
 </section>
 
@@ -561,46 +656,52 @@
     en: {
       _title: "ClearSite Studio — websites for local businesses · Berlin",
       _mailSubject: "Website enquiry — ClearSite Studio",
-      "nav.work": "Work", "nav.services": "Services", "nav.about": "About", "nav.cta": "Get in touch",
+      "nav.work": "Projects", "nav.services": "Services", "nav.pricing": "Pricing", "nav.about": "About", "nav.cta": "Get in touch",
+      "work.allBtn": "See all projects →",
+      "pricing.eyebrow": "Pricing",
+      "pricing.h2": "You see your finished website before you pay a cent.",
+      "pricing.p": "First the design, then the decision. Two clear ways to get your website — both complete, both with your domain in your name.",
+      "pricing.aboFlag": "Launch price",
+      "pricing.aboH3": "Website subscription",
+      "pricing.aboPriceUnit": "/month",
+      "pricing.aboCond": "For the first 10 clients — you keep this rate for good. 59 €/month afterwards. 0 € setup cost.",
+      "pricing.aboLi1": "Custom design — you see the finished draft before you commit",
+      "pricing.aboLi2": "Your own domain, hosting, SSL & e-mail forwarding",
+      "pricing.aboLi3": "Legal pages included (Impressum & privacy policy)",
+      "pricing.aboLi4": "Technical maintenance, updates & backups",
+      "pricing.aboLi5": "1 hour of changes every month — texts, photos, prices, hours",
+      "pricing.aboLi6": "Google Business Profile setup",
+      "pricing.aboFine": "12-month minimum term, then cancel monthly. From month 13 you can buy the site out for 290 € — then it's fully yours. Your domain is registered in your name from day one.",
+      "pricing.aboCta": "Request your free draft",
+      "pricing.kaufH3": "Website purchase",
+      "pricing.kaufFrom": "from",
+      "pricing.kaufUnit": "one-time",
+      "pricing.kaufCond": "One-pager 490 € · up to 5 pages 890 € — both incl. 12 months of hosting.",
+      "pricing.kaufLi1": "The site and all content belong to you from day one",
+      "pricing.kaufLi2": "Two revision rounds after delivery included",
+      "pricing.kaufLi3": "Afterwards 19 €/month for hosting & care — incl. 30 min of changes",
+      "pricing.kaufLi4": "Or a free handover — host it yourself with no running costs",
+      "pricing.kaufFine": "No subscription, no minimum term. The optional care plan is cancellable monthly.",
+      "pricing.kaufCta": "Request a quote",
+      "pricing.note1": "All prices are final — as a small business under § 19 UStG I charge no VAT.",
+      "pricing.note2": "Second language (German / Polish / English): +10 €/month on the subscription, or +190 € once with the purchase.",
+      "pricing.note3": "Medical practices, multiple locations or larger projects: individual quote on request.",
       "hero.eyebrow": "Web studio — Berlin",
       "hero.h1": "Clear, fast websites that turn <em>searches into customers</em>.",
       "hero.p": "I design and build websites for small and local businesses — hand-built pages that load instantly, look like your business, and make people pick up the phone. No page builders, no bloat, no templates everyone else already has.",
       "hero.cta1": "See the work", "hero.cta2": "Start a project",
       "hero.offer": "★ Free first-look design of your homepage — no obligation",
       "work.eyebrow": "Selected work", "work.h2": "Built to bring in calls, not just clicks.",
-      "work.tagLive": "Client work · Live",
-      "work.featureH3": "M.K.T Ćwioro — Transport & Earthworks",
-      "work.featureP": "A one-page site for a Polish transport and earthworks company: services, machinery, coverage area and reviews — every section funnelling to one action, the phone call. Launched on the client's own domain.",
-      "work.visit": "Visit cwioro-robotyziemne.pl →",
-      "work.featureQuote": "“Before, all I had was a classified listing on OLX. Bartosz took care of everything — the domain, the texts, all the rest — and now I have a proper website I simply send to my customers.”",
-      "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Concept design", "work.tagConcept4": "Concept design",
-      "work.tagConcept8": "Concept design", "work.tagConcept9": "Concept design",
-      "work.tagConcept10": "Concept design",
-      "work.tagConcept11": "Concept design · New",
-      "work.tagConcept12": "Concept design",
-      "work.c12H3": "Plumbing & leak detection — Wrocław",
-      "work.c12P": "A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.",
-      "work.c11H3": "Dental practice — Friedrichshain, Berlin",
-      "work.c11P": "A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.",
-      "work.c10H3": "Barber shop — Prenzlauer Berg, Berlin",
-      "work.c10P": "A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.",
-      "work.c8H3": "Ski & bike shop — Wrocław",
-      "work.c8P": "A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.",
-      "work.c9H3": "Tattoo studio — Friedrichshain, Berlin",
-      "work.c9P": "Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.",
-      "work.c3H3": "Café & mobile cocktail bar — Berlin",
-      "work.c3P": "A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.",
-      "work.c4H3": "Yoga studio — Prenzlauer Berg",
-      "work.c4P": "Calm, editorial design for a studio where you pay what you can afford.",
-      "work.tagConcept5": "Concept design", "work.tagConcept6": "Concept design",
-      "work.tagConcept7": "Concept design",
+      "work.c3H3": "Café & cocktail bar — Berlin",
+      "work.c4H3": "Yoga studio — Berlin",
       "work.c5H3": "Georgian bakery — Wrocław",
-      "work.c5P": "A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.",
       "work.c6H3": "All-day café — Berlin",
-      "work.c6P": "Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.",
-      "work.c7H3": "Flower shop — Friedrichshain, Berlin",
-      "work.c7P": "A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.",
+      "work.c7H3": "Flower shop — Berlin",
+      "work.c8H3": "Ski & bike shop — Wrocław",
+      "work.c9H3": "Tattoo studio — Berlin",
+      "work.c10H3": "Barber shop — Berlin",
+      "work.c11H3": "Dental practice — Berlin",
+      "work.c12H3": "Plumbing — Wrocław",
       "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
       "proc.eyebrow": "How it works", "proc.h2": "From first message to launch — three steps.",
       "proc.s1H3": "Free first look",
@@ -616,6 +717,9 @@
       "services.s2P": "Your site stays current without you thinking about it — monthly text and photo updates, price and opening-hours changes, and someone to message when anything needs doing.",
       "services.s3H3": "Content & visibility",
       "services.s3P": "Google Business Profile tune-ups, seasonal promo graphics and post content that keeps your business showing up where locals are searching.",
+      "services.s1Meta": "Design · Copy · SEO basics · Your own domain",
+      "services.s2Meta": "Updates · Backups · 1 h changes / month",
+      "services.s3Meta": "Google Business Profile · Promo graphics · Posts",
       "services.soon": "Launching soon",
       "about.eyebrow": "About", "about.h2": "Small studio. Direct line. No handoffs.",
       "about.p1": "I'm Bartosz — a web designer and developer based in Berlin, working with small and local businesses across Germany and Poland. ClearSite Studio is exactly what it sounds like: clear websites, built one at a time, by the person you actually talk to.",
@@ -631,46 +735,52 @@
     de: {
       _title: "ClearSite Studio — Websites für lokale Unternehmen · Berlin",
       _mailSubject: "Website-Anfrage — ClearSite Studio",
-      "nav.work": "Projekte", "nav.services": "Leistungen", "nav.about": "Über mich", "nav.cta": "Kontakt aufnehmen",
+      "nav.work": "Projekte", "nav.services": "Leistungen", "nav.pricing": "Preise", "nav.about": "Über mich", "nav.cta": "Kontakt aufnehmen",
+      "work.allBtn": "Alle Projekte ansehen →",
+      "pricing.eyebrow": "Preise",
+      "pricing.h2": "Sie sehen Ihre fertige Website, bevor Sie einen Cent zahlen.",
+      "pricing.p": "Erst der Entwurf, dann die Entscheidung. Zwei klare Wege zu Ihrer Website — beide komplett, beide mit Ihrer Domain auf Ihren Namen.",
+      "pricing.aboFlag": "Einführungspreis",
+      "pricing.aboH3": "Website-Abo",
+      "pricing.aboPriceUnit": "/Monat",
+      "pricing.aboCond": "Für die ersten 10 Kunden — Sie behalten diesen Preis dauerhaft. Danach 59 €/Monat. 0 € Startkosten.",
+      "pricing.aboLi1": "Individuelles Design — den fertigen Entwurf sehen Sie vor der Entscheidung",
+      "pricing.aboLi2": "Eigene .de-Domain, Hosting, SSL & E-Mail-Weiterleitung",
+      "pricing.aboLi3": "Impressum & Datenschutzerklärung inklusive",
+      "pricing.aboLi4": "Technische Wartung, Updates & Backups",
+      "pricing.aboLi5": "1 Stunde Änderungen pro Monat — Texte, Fotos, Preise, Öffnungszeiten",
+      "pricing.aboLi6": "Einrichtung Ihres Google-Unternehmensprofils",
+      "pricing.aboFine": "12 Monate Mindestlaufzeit, danach monatlich kündbar. Ab dem 13. Monat jederzeit ablösbar für 290 € — die Website gehört dann ganz Ihnen. Ihre Domain läuft von Anfang an auf Ihren Namen.",
+      "pricing.aboCta": "Kostenlosen Entwurf anfragen",
+      "pricing.kaufH3": "Website-Kauf",
+      "pricing.kaufFrom": "ab",
+      "pricing.kaufUnit": "einmalig",
+      "pricing.kaufCond": "One-Pager 490 € · bis zu 5 Seiten 890 € — jeweils inkl. 12 Monate Hosting.",
+      "pricing.kaufLi1": "Website & Inhalte gehören Ihnen ab Tag 1",
+      "pricing.kaufLi2": "2 Korrekturrunden nach Abnahme inklusive",
+      "pricing.kaufLi3": "Danach 19 €/Monat für Hosting & Pflege — inkl. 30 Min. Änderungen pro Monat",
+      "pricing.kaufLi4": "Oder kostenlose Übergabe — Sie hosten selbst, ohne laufende Kosten",
+      "pricing.kaufFine": "Kein Abo, keine Mindestlaufzeit. Das optionale Pflegepaket ist monatlich kündbar.",
+      "pricing.kaufCta": "Angebot anfragen",
+      "pricing.note1": "Alle Preise sind Endpreise — als Kleinunternehmer nach § 19 UStG fällt keine Umsatzsteuer an.",
+      "pricing.note2": "Zweite Sprache (Deutsch / Polnisch / Englisch): +10 €/Monat im Abo oder +190 € einmalig beim Kauf.",
+      "pricing.note3": "Praxen, mehrere Standorte oder größere Projekte: individuelles Angebot auf Anfrage.",
       "hero.eyebrow": "Webstudio — Berlin",
       "hero.h1": "Klare, schnelle Websites, die aus <em>Suchanfragen Kunden</em> machen.",
       "hero.p": "Ich gestalte und baue Websites für kleine und lokale Unternehmen — von Hand gebaute Seiten, die sofort laden, nach Ihrem Unternehmen aussehen und dafür sorgen, dass Menschen zum Telefon greifen. Keine Baukästen, kein Ballast, keine Vorlagen, die alle anderen schon haben.",
       "hero.cta1": "Projekte ansehen", "hero.cta2": "Projekt starten",
       "hero.offer": "★ Kostenloser erster Design-Entwurf Ihrer Startseite — unverbindlich",
       "work.eyebrow": "Ausgewählte Projekte", "work.h2": "Gebaut für Anrufe, nicht nur für Klicks.",
-      "work.tagLive": "Kundenprojekt · Live",
-      "work.featureH3": "M.K.T Ćwioro — Transport & Erdarbeiten",
-      "work.featureP": "Eine One-Page-Website für ein polnisches Transport- und Erdbauunternehmen: Leistungen, Maschinen, Einsatzgebiet und Bewertungen — jede Sektion führt zu einer einzigen Aktion: dem Anruf. Gestartet auf der eigenen Domain des Kunden.",
-      "work.visit": "cwioro-robotyziemne.pl besuchen →",
-      "work.featureQuote": "„Früher hatte ich nur eine Kleinanzeige auf OLX. Bartosz hat sich um alles gekümmert — Domain, Texte, den ganzen Rest — und jetzt habe ich eine richtige Website, die ich meinen Kunden einfach schicke.“",
-      "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Konzeptdesign", "work.tagConcept4": "Konzeptdesign",
-      "work.tagConcept8": "Konzeptdesign", "work.tagConcept9": "Konzeptdesign",
-      "work.tagConcept10": "Konzeptdesign",
-      "work.tagConcept11": "Konzeptdesign · Neu",
-      "work.tagConcept12": "Konzeptdesign",
-      "work.c12H3": "Sanitär & Leckortung — Wrocław (Breslau)",
-      "work.c12P": "Ein sachliches Handwerker-Design in Anthrazit und Petrol — aufgebaut um Notdienst-Anrufe und Leckortung für einen 5,0★-Sanitärbetrieb.",
-      "work.c11H3": "Zahnarztpraxis — Friedrichshain, Berlin",
-      "work.c11P": "Ein Fresh-Smile-Design in zartem Himmelblau — organisch beschnittenes Hero-Foto, schwebende Termin-Badges und ein Besuch in vier Schritten als Zeitstrahl, für eine Familienpraxis mit Vertrauen seit 1992.",
-      "work.c10H3": "Barbershop — Prenzlauer Berg, Berlin",
-      "work.c10P": "Ein Letterpress-Plakat in Barber-Pole-Rot, Weiß und Marineblau — riesige Displayschrift, eine Preisliste in Rot auf Weiß und eine Polaroid-Wand für einen 5,0★-Barbershop.",
-      "work.c8H3": "Ski- & Fahrradladen — Wrocław (Breslau)",
-      "work.c8P": "Ein Zwei-Saisons-Design mit funktionierendem Sommer/Winter-Schalter — eine Seite, die Farben, Fotos und Preisliste wechselt, sobald der Schnee fällt.",
-      "work.c9H3": "Tattoo-Studio — Friedrichshain, Berlin",
-      "work.c9P": "Ink-brutalistischer Flash-Sheet-Look: harte Rasterlinien, gestapelte Displayschrift und ein gedrehter 4,9★-Stempel für ein Walk-in-Studio.",
-      "work.c3H3": "Café & mobile Cocktailbar — Berlin",
-      "work.c3P": "Retro-Plakat auf Karamell — Briefmarken-Rahmen, Sticker und eine Kreidetafel als Karte für ein Fenster-Café in Friedrichshain.",
-      "work.c4H3": "Yogastudio — Prenzlauer Berg",
-      "work.c4P": "Ruhiges, editoriales Design für ein Studio mit Zahl-was-du-kannst-Prinzip.",
-      "work.tagConcept5": "Konzeptdesign", "work.tagConcept6": "Konzeptdesign",
-      "work.tagConcept7": "Konzeptdesign",
-      "work.c5H3": "Georgische Bäckerei — Wrocław",
-      "work.c5P": "Bento-Mosaik-Hero und Scroll-Snap-Speisekarte für eine Bäckerei auf dem Weg zu fünf Filialen.",
+      "work.c3H3": "Café & Cocktailbar — Berlin",
+      "work.c4H3": "Yogastudio — Berlin",
+      "work.c5H3": "Bäckerei — Wrocław",
       "work.c6H3": "Tagescafé — Berlin",
-      "work.c6P": "Morgentisch-Design: runde Tellerfotos, Delfter Blau und eine Karte, die dem Tagesverlauf folgt.",
-      "work.c7H3": "Blumenladen — Friedrichshain, Berlin",
-      "work.c7P": "Blumenmarkt-Editorial — tiefes Grün, Kraftpapier-Anhänger und Bewertungen als Geschenkkärtchen — für den beliebtesten Blumenladen im Kiez.",
+      "work.c7H3": "Blumenladen — Berlin",
+      "work.c8H3": "Ski & Fahrrad — Wrocław",
+      "work.c9H3": "Tattoo-Studio — Berlin",
+      "work.c10H3": "Barbershop — Berlin",
+      "work.c11H3": "Zahnarztpraxis — Berlin",
+      "work.c12H3": "Sanitär — Wrocław",
       "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
       "proc.eyebrow": "So läuft's", "proc.h2": "Von der ersten Nachricht bis zum Launch — drei Schritte.",
       "proc.s1H3": "Kostenloser erster Entwurf",
@@ -686,6 +796,9 @@
       "services.s2P": "Ihre Website bleibt aktuell, ohne dass Sie daran denken müssen — monatliche Text- und Fotoänderungen, Preis- und Öffnungszeiten-Updates und ein direkter Ansprechpartner, wenn etwas zu tun ist.",
       "services.s3H3": "Content & Sichtbarkeit",
       "services.s3P": "Google-Unternehmensprofil-Optimierung, saisonale Promo-Grafiken und Beiträge, die Ihr Unternehmen dort sichtbar halten, wo Ihre Kunden suchen.",
+      "services.s1Meta": "Design · Texte · SEO-Grundlagen · Eigene Domain",
+      "services.s2Meta": "Updates · Backups · 1 Std. Änderungen / Monat",
+      "services.s3Meta": "Google-Unternehmensprofil · Promo-Grafiken · Beiträge",
       "services.soon": "Demnächst",
       "about.eyebrow": "Über mich", "about.h2": "Kleines Studio. Direkter Draht. Keine Umwege.",
       "about.p1": "Ich bin Bartosz — Webdesigner und Entwickler in Berlin. Ich arbeite mit kleinen und lokalen Unternehmen in Deutschland und Polen. ClearSite Studio ist genau das, wonach es klingt: klare Websites, eine nach der anderen gebaut, von der Person, mit der Sie tatsächlich sprechen.",
@@ -701,46 +814,52 @@
     pl: {
       _title: "ClearSite Studio — strony internetowe dla lokalnych firm · Berlin",
       _mailSubject: "Zapytanie o stronę — ClearSite Studio",
-      "nav.work": "Realizacje", "nav.services": "Oferta", "nav.about": "O mnie", "nav.cta": "Napisz do mnie",
+      "nav.work": "Realizacje", "nav.services": "Oferta", "nav.pricing": "Cennik", "nav.about": "O mnie", "nav.cta": "Napisz do mnie",
+      "work.allBtn": "Zobacz wszystkie realizacje →",
+      "pricing.eyebrow": "Cennik",
+      "pricing.h2": "Zobaczysz swoją gotową stronę, zanim zapłacisz choćby centa.",
+      "pricing.p": "Najpierw projekt, potem decyzja. Dwie przejrzyste drogi do własnej strony — obie kompletne, obie z domeną zarejestrowaną na Ciebie.",
+      "pricing.aboFlag": "Cena startowa",
+      "pricing.aboH3": "Strona w abonamencie",
+      "pricing.aboPriceUnit": "/mies.",
+      "pricing.aboCond": "Dla pierwszych 10 klientów — ta stawka zostaje z Tobą na stałe. Później 59 €/mies. 0 € kosztów startowych.",
+      "pricing.aboLi1": "Indywidualny projekt — gotowy podgląd widzisz przed podjęciem decyzji",
+      "pricing.aboLi2": "Własna domena, hosting, SSL i przekierowanie e-mail",
+      "pricing.aboLi3": "Strony prawne w cenie (Impressum i polityka prywatności)",
+      "pricing.aboLi4": "Utrzymanie techniczne, aktualizacje i kopie zapasowe",
+      "pricing.aboLi5": "1 godzina zmian miesięcznie — teksty, zdjęcia, ceny, godziny otwarcia",
+      "pricing.aboLi6": "Konfiguracja wizytówki Google",
+      "pricing.aboFine": "Minimalny okres to 12 miesięcy, potem umowa miesięczna. Od 13. miesiąca możesz wykupić stronę za 290 € — wtedy jest w całości Twoja. Domena od pierwszego dnia zarejestrowana na Ciebie.",
+      "pricing.aboCta": "Zamów bezpłatny projekt",
+      "pricing.kaufH3": "Strona na własność",
+      "pricing.kaufFrom": "od",
+      "pricing.kaufUnit": "jednorazowo",
+      "pricing.kaufCond": "Strona typu one-page 490 € · do 5 podstron 890 € — w cenie 12 miesięcy hostingu.",
+      "pricing.kaufLi1": "Strona i wszystkie treści są Twoje od pierwszego dnia",
+      "pricing.kaufLi2": "Dwie rundy poprawek po odbiorze w cenie",
+      "pricing.kaufLi3": "Potem 19 €/mies. za hosting i opiekę — w tym 30 min zmian miesięcznie",
+      "pricing.kaufLi4": "Albo bezpłatne przekazanie — hostujesz u siebie, bez stałych opłat",
+      "pricing.kaufFine": "Bez abonamentu i bez okresu minimalnego. Opcjonalny pakiet opieki możesz anulować co miesiąc.",
+      "pricing.kaufCta": "Zapytaj o wycenę",
+      "pricing.note1": "Wszystkie ceny są cenami końcowymi — jako mały przedsiębiorca (§ 19 UStG) nie doliczam podatku VAT.",
+      "pricing.note2": "Druga wersja językowa (niemiecki / polski / angielski): +10 €/mies. w abonamencie lub +190 € jednorazowo przy zakupie.",
+      "pricing.note3": "Gabinety, kilka lokalizacji lub większe projekty: wycena indywidualna.",
       "hero.eyebrow": "Studio stron internetowych — Berlin",
       "hero.h1": "Przejrzyste, szybkie strony, które zamieniają <em>wyszukiwania w klientów</em>.",
       "hero.p": "Projektuję i buduję strony internetowe dla małych, lokalnych firm — pisane ręcznie strony, które ładują się natychmiast, wyglądają jak Twoja firma i sprawiają, że ludzie sięgają po telefon. Bez kreatorów, bez zbędnych dodatków, bez szablonów, które mają już wszyscy.",
       "hero.cta1": "Zobacz realizacje", "hero.cta2": "Zacznij projekt",
       "hero.offer": "★ Bezpłatny wstępny projekt Twojej strony głównej — bez zobowiązań",
       "work.eyebrow": "Wybrane realizacje", "work.h2": "Budowane tak, żeby dzwonili — nie tylko klikali.",
-      "work.tagLive": "Realizacja · Online",
-      "work.featureH3": "M.K.T Ćwioro — Transport i Roboty Ziemne",
-      "work.featureP": "Jednostronicowa witryna dla firmy transportowo-ziemnej: usługi, maszyny, zasięg działania i opinie — każda sekcja prowadzi do jednego działania: telefonu. Uruchomiona na własnej domenie klienta.",
-      "work.visit": "Zobacz cwioro-robotyziemne.pl →",
-      "work.featureQuote": "„Wcześniej miałem tylko ogłoszenie na OLX. Bartosz zajął się wszystkim — domeną, tekstami, całą resztą — i teraz mam porządną stronę, którą po prostu wysyłam klientom.”",
-      "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Projekt koncepcyjny", "work.tagConcept4": "Projekt koncepcyjny",
-      "work.tagConcept8": "Projekt koncepcyjny", "work.tagConcept9": "Projekt koncepcyjny",
-      "work.tagConcept10": "Projekt koncepcyjny",
-      "work.tagConcept11": "Projekt koncepcyjny · Nowy",
-      "work.tagConcept12": "Projekt koncepcyjny",
-      "work.c12H3": "Hydraulik i wykrywanie wycieków — Wrocław",
-      "work.c12P": "Rzeczowy, fachowy projekt w graficie i morskiej zieleni — zbudowany wokół pilnych zgłoszeń i diagnostyki wycieków dla firmy hydraulicznej z oceną 5,0★.",
-      "work.c11H3": "Gabinet stomatologiczny — Berlin Friedrichshain",
-      "work.c11P": "Projekt „świeżego uśmiechu” w bladym błękicie — zdjęcie w organicznym kadrze, pływające plakietki rezerwacji i wizyta w czterech krokach na osi czasu, dla rodzinnego gabinetu cieszącego się zaufaniem od 1992 roku.",
-      "work.c10H3": "Barbershop — Berlin Prenzlauer Berg",
-      "work.c10P": "Letterpressowy plakat w barberskiej czerwieni, bieli i granacie — ogromna typografia, cennik czerwienią na białym i ściana polaroidów dla barbershopu z oceną 5,0★.",
-      "work.c8H3": "Sklep narciarsko-rowerowy — Wrocław",
-      "work.c8P": "Projekt na dwa sezony z działającym przełącznikiem lato/zima — jedna strona zmienia paletę, zdjęcia i cennik, gdy tylko spadnie śnieg.",
-      "work.c9H3": "Studio tatuażu — Berlin Friedrichshain",
-      "work.c9P": "Brutalistyczny styl flash-sheet: twarda siatka, piętrowa typografia i obrócona pieczątka 4,9★ dla studia bez zapisów.",
-      "work.c3H3": "Kawiarnia i mobilny bar koktajlowy — Berlin",
-      "work.c3P": "Retro plakat na karmelowym tle — kadr jak znaczek pocztowy, naklejki i menu na kredowej tablicy dla kawiarni „z okna” w Friedrichshain.",
-      "work.c4H3": "Studio jogi — Prenzlauer Berg",
-      "work.c4P": "Spokojny, magazynowy styl dla studia, w którym płacisz tyle, ile możesz.",
-      "work.tagConcept5": "Projekt koncepcyjny", "work.tagConcept6": "Projekt koncepcyjny",
-      "work.tagConcept7": "Projekt koncepcyjny",
-      "work.c5H3": "Gruzińska piekarnia — Wrocław",
-      "work.c5P": "Mozaika bento i menu ze scroll-snap dla piekarni rozrastającej się do pięciu lokali.",
-      "work.c6H3": "Kawiarnia śniadaniowa — Berlin",
-      "work.c6P": "Projekt w duchu porannego stołu: okrągłe zdjęcia talerzy, błękit delft i menu płynące z porami dnia.",
-      "work.c7H3": "Kwiaciarnia — Berlin Friedrichshain",
-      "work.c7P": "Kwiatowy targ w wersji editorial — głęboka zieleń, etykiety z papieru kraft i opinie jak bileciki do bukietów — dla najbardziej lubianej kwiaciarni w okolicy.",
+      "work.c3H3": "Kawiarnia i bar — Berlin",
+      "work.c4H3": "Studio jogi — Berlin",
+      "work.c5H3": "Piekarnia — Wrocław",
+      "work.c6H3": "Kawiarnia — Berlin",
+      "work.c7H3": "Kwiaciarnia — Berlin",
+      "work.c8H3": "Narty i rowery — Wrocław",
+      "work.c9H3": "Studio tatuażu — Berlin",
+      "work.c10H3": "Barbershop — Berlin",
+      "work.c11H3": "Stomatolog — Berlin",
+      "work.c12H3": "Hydraulik — Wrocław",
       "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
       "proc.eyebrow": "Jak to działa", "proc.h2": "Od pierwszej wiadomości do startu — trzy kroki.",
       "proc.s1H3": "Bezpłatny pierwszy projekt",
@@ -756,6 +875,9 @@
       "services.s2P": "Twoja strona jest zawsze aktualna, a Ty nie musisz o tym myśleć — comiesięczne zmiany tekstów i zdjęć, aktualizacja cen i godzin otwarcia oraz jedna osoba do kontaktu, gdy coś trzeba zrobić.",
       "services.s3H3": "Treści i widoczność",
       "services.s3P": "Optymalizacja wizytówki Google, sezonowe grafiki promocyjne i posty, dzięki którym Twoja firma pojawia się tam, gdzie szukają jej klienci.",
+      "services.s1Meta": "Projekt · Teksty · Podstawy SEO · Własna domena",
+      "services.s2Meta": "Aktualizacje · Kopie zapasowe · 1 godz. zmian / mies.",
+      "services.s3Meta": "Wizytówka Google · Grafiki promocyjne · Posty",
       "services.soon": "Wkrótce",
       "about.eyebrow": "O mnie", "about.h2": "Małe studio. Kontakt bez pośredników.",
       "about.p1": "Nazywam się Bartosz — projektuję i buduję strony internetowe. Mieszkam w Berlinie i pracuję z małymi, lokalnymi firmami w Niemczech i w Polsce. ClearSite Studio to dokładnie to, na co wygląda: przejrzyste strony, budowane jedna po drugiej, przez osobę, z którą naprawdę rozmawiasz.",
@@ -801,6 +923,16 @@
   const browser = (navigator.language || "").slice(0, 2).toLowerCase();
   const initial = [param, saved, browser].find((l) => l && I18N[l]) || "en";
   setLang(initial);
+
+  // ---------- hero collage: last-hovered/focused card rises and stays on top ----------
+  (() => {
+    let z = 10;
+    document.querySelectorAll(".stack-card").forEach((card) => {
+      const raise = () => { card.style.zIndex = String(++z); };
+      card.addEventListener("mouseenter", raise);
+      card.addEventListener("focus", raise);
+    });
+  })();
 </script>
 
 </body>
