@@ -129,6 +129,8 @@
     .concept-wide .pad { display: flex; flex-direction: column; justify-content: center; padding: 30px 32px; }
     .concept-wide h3 { font-size: 1.3rem; }
     .concept-wide p { font-size: 0.95rem; }
+    /* closes the final row: 11 cards would otherwise leave a ragged 2-up */
+    .concept-half { grid-column: span 3; }
     .work-note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; max-width: 70ch; }
 
     /* ---------- contact ---------- */
@@ -158,6 +160,9 @@
     @media (max-width: 1020px) {
       .concepts { grid-template-columns: 1fr 1fr; }
       .concept { grid-column: span 1; }
+      .concept-half { grid-column: span 1; }
+      /* odd card count leaves the last one orphaned in a 2-up row — let it fill instead */
+      .concept-half:last-child { grid-column: 1 / -1; }
       .concept-wide { grid-column: 1 / -1; }
     }
     @media (max-width: 900px) {
@@ -227,66 +232,98 @@
     </div>
 
     <div class="concepts">
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/beauty-woman/" target="_blank" rel="noopener">
+        <img src="assets/beautywoman-hero.jpg" alt="Beauty Woman by Violetta hair and beauty salon concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c14H3">Hair &amp; beauty salon — Steglitz, Berlin</h3>
+          <p data-i18n="work.c14P">Soft blush and deep plum around an arched hero portrait — a bilingual salon page in German and Polish, with a self-hosted map that loads without calling Google.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/shelby/" target="_blank" rel="noopener">
+        <img src="assets/shelby-hero.jpg" alt="Tommy Shelby Barber concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c16H3">Barber shop — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c16P">Warm bone and deep pine green with brass — a photographic split hero and a price list kept like a ledger, for a 5.0★ barber on Proskauer Straße.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener">
+        <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
+        </div>
+      </a>
       <a class="concept reveal" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener">
         <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept10">Concept design</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
           <h3 data-i18n="work.c10H3">Barber shop — Prenzlauer Berg, Berlin</h3>
           <p data-i18n="work.c10P">A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener">
-        <img src="assets/blackcat-hero.jpg" alt="Black Cat tattoo studio concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept9">Concept design</span>
-          <h3 data-i18n="work.c9H3">Tattoo studio — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c9P">Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
-        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept6">Concept design</span>
-          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
-          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
-        <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept7">Concept design</span>
-          <h3 data-i18n="work.c7H3">Flower shop — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener">
         <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept4">Concept design</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
           <h3 data-i18n="work.c4H3">Yoga studio — Prenzlauer Berg</h3>
           <p data-i18n="work.c4P">Calm, editorial design for a studio where you pay what you can afford.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener">
+        <img src="assets/blackcat-hero.jpg" alt="Black Cat tattoo studio concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c9H3">Tattoo studio — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c9P">Ink-brutalist flash-sheet look: hard grid rules, stacked display type and a rotated 4.9★ stamp for a walk-in studio.</p>
+        </div>
+      </a>
+      <a class="concept concept-wide reveal" href="https://clearsitestudio.de/demo/magro-bau/" target="_blank" rel="noopener">
+        <img src="assets/magro-hero.jpg" alt="Magro Bau roof waterproofing concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConceptNew">Concept design · New</span>
+          <h3 data-i18n="work.c13H3">Roof waterproofing &amp; insulation — Berlin</h3>
+          <p data-i18n="work.c13P">Cool concrete and hi-vis chartreuse for a flat-roof specialist — the hero is a cross-section of a warm-roof build-up you can hover layer by layer, and the services are set as a tradesman's Leistungsverzeichnis.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
+        <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c6H3">All-day café — Berlin</h3>
+          <p data-i18n="work.c6P">Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener">
         <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept8">Concept design</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
           <h3 data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</h3>
           <p data-i18n="work.c8P">A dual-season design with a working summer/winter switch — one page that flips its palette, photos and price list the moment the snow falls.</p>
         </div>
       </a>
-      <a class="concept concept-wide reveal" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener">
-        <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/backfee/" target="_blank" rel="noopener">
+        <img src="assets/backfee-hero.jpg" alt="Bäckerei Backfee neighbourhood bakery concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept11">Concept design · New</span>
-          <h3 data-i18n="work.c11H3">Dental practice — Friedrichshain, Berlin</h3>
-          <p data-i18n="work.c11P">A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.</p>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c15H3">Neighbourhood bakery — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c15P">Butter yellow with awning scallops and an oven-arch hero — for a three-shop Kiez bakery whose working day starts at five in the morning.</p>
+        </div>
+      </a>
+      <a class="concept reveal" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
+        <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
+        <div class="pad">
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
+          <h3 data-i18n="work.c7H3">Flower shop — Friedrichshain, Berlin</h3>
+          <p data-i18n="work.c7P">A flower-market editorial look — deep botanical greens, kraft-paper tags and reviews styled as bouquet gift cards — for the best-loved florist in the Kiez.</p>
         </div>
       </a>
       <a class="concept reveal" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener">
         <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept3">Concept design</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
           <h3 data-i18n="work.c3H3">Café &amp; mobile cocktail bar — Berlin</h3>
           <p data-i18n="work.c3P">A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.</p>
         </div>
@@ -294,17 +331,9 @@
       <a class="concept reveal" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener">
         <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
         <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept5">Concept design</span>
+          <span class="tag tag-concept" data-i18n="work.tagConcept">Concept design</span>
           <h3 data-i18n="work.c5H3">Georgian bakery — Wrocław</h3>
-          <p data-i18n="work.c5P">A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.</p>
-        </div>
-      </a>
-      <a class="concept reveal" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener">
-        <img src="assets/mikmat-hero.jpg" alt="MikMat Instal plumbing concept design" loading="lazy">
-        <div class="pad">
-          <span class="tag tag-concept" data-i18n="work.tagConcept12">Concept design</span>
-          <h3 data-i18n="work.c12H3">Plumbing &amp; leak detection — Wrocław</h3>
-          <p data-i18n="work.c12P">A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.</p>
+          <p data-i18n="work.c5P">Deep wine and gold: the Georgian word for bread — პური — set as the hero and glossed like a dictionary entry, over a scroll-snap menu counter.</p>
         </div>
       </a>
     </div>
@@ -361,17 +390,21 @@
       "work.visit": "Visit cwioro-robotyziemne.pl →",
       "work.featureQuote": "“Before, all I had was a classified listing on OLX. Bartosz took care of everything — the domain, the texts, all the rest — and now I have a proper website I simply send to my customers.”",
       "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Concept design", "work.tagConcept4": "Concept design",
-      "work.tagConcept5": "Concept design", "work.tagConcept6": "Concept design",
-      "work.tagConcept7": "Concept design", "work.tagConcept8": "Concept design",
-      "work.tagConcept9": "Concept design", "work.tagConcept10": "Concept design",
-      "work.tagConcept11": "Concept design · New", "work.tagConcept12": "Concept design",
+      "work.tagConcept": "Concept design", "work.tagConceptNew": "Concept design · New",
+      "work.c13H3": "Roof waterproofing & insulation — Berlin",
+      "work.c13P": "Cool concrete and hi-vis chartreuse for a flat-roof specialist — the hero is a cross-section of a warm-roof build-up you can hover layer by layer, and the services are set as a tradesman's Leistungsverzeichnis.",
+      "work.c14H3": "Hair & beauty salon — Steglitz, Berlin",
+      "work.c14P": "Soft blush and deep plum around an arched hero portrait — a bilingual salon page in German and Polish, with a self-hosted map that loads without calling Google.",
+      "work.c15H3": "Neighbourhood bakery — Friedrichshain, Berlin",
+      "work.c15P": "Butter yellow with awning scallops and an oven-arch hero — for a three-shop Kiez bakery whose working day starts at five in the morning.",
+      "work.c16H3": "Barber shop — Friedrichshain, Berlin",
+      "work.c16P": "Warm bone and deep pine green with brass — a photographic split hero and a price list kept like a ledger, for a 5.0★ barber on Proskauer Straße.",
       "work.c3H3": "Café & mobile cocktail bar — Berlin",
       "work.c3P": "A retro poster on burnt caramel — a postage-stamp hero, sticker badges and a chalkboard menu for a window café in Friedrichshain.",
       "work.c4H3": "Yoga studio — Prenzlauer Berg",
       "work.c4P": "Calm, editorial design for a studio where you pay what you can afford.",
       "work.c5H3": "Georgian bakery — Wrocław",
-      "work.c5P": "A bento-mosaic hero and scroll-snap menu for a bakery growing to five shops.",
+      "work.c5P": "Deep wine and gold: the Georgian word for bread — პური — set as the hero and glossed like a dictionary entry, over a scroll-snap menu counter.",
       "work.c6H3": "All-day café — Berlin",
       "work.c6P": "Breakfast-table design: circular plate photography, delft blue and a menu that follows the day.",
       "work.c7H3": "Flower shop — Friedrichshain, Berlin",
@@ -384,8 +417,6 @@
       "work.c10P": "A letterpress poster in barber-pole red, white and navy — giant display type, a red-on-white price list and a polaroid wall for a 5.0★ barber shop.",
       "work.c11H3": "Dental practice — Friedrichshain, Berlin",
       "work.c11P": "A fresh-smile design in pale sky blue — an organically cropped hero photo, floating booking badges and a four-step visit timeline for a family practice trusted since 1992.",
-      "work.c12H3": "Plumbing & leak detection — Wrocław",
-      "work.c12P": "A no-nonsense trade design in charcoal and teal — built around emergency call-outs and leak diagnosis for a 5.0★ plumbing firm.",
       "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
       "contact.eyebrow": "Contact", "contact.h2": "Have a business that deserves a better website?",
       "contact.p": "Tell me what you do and where — I'll reply with honest advice and, if it's a fit, a free first-look design of your homepage. No obligation either way.",
@@ -405,17 +436,21 @@
       "work.visit": "cwioro-robotyziemne.pl besuchen →",
       "work.featureQuote": "„Früher hatte ich nur eine Kleinanzeige auf OLX. Bartosz hat sich um alles gekümmert — Domain, Texte, den ganzen Rest — und jetzt habe ich eine richtige Website, die ich meinen Kunden einfach schicke.“",
       "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Konzeptdesign", "work.tagConcept4": "Konzeptdesign",
-      "work.tagConcept5": "Konzeptdesign", "work.tagConcept6": "Konzeptdesign",
-      "work.tagConcept7": "Konzeptdesign", "work.tagConcept8": "Konzeptdesign",
-      "work.tagConcept9": "Konzeptdesign", "work.tagConcept10": "Konzeptdesign",
-      "work.tagConcept11": "Konzeptdesign · Neu", "work.tagConcept12": "Konzeptdesign",
+      "work.tagConcept": "Konzeptdesign", "work.tagConceptNew": "Konzeptdesign · Neu",
+      "work.c13H3": "Bauwerksabdichtung & Wärmedämmung — Berlin",
+      "work.c13P": "Kühler Beton und Warnweste-Grün für einen Flachdach-Spezialisten — im Hero ein Schnitt durch den Warmdach-Aufbau, Schicht für Schicht zum Durchfahren, und die Leistungen stehen als echtes Leistungsverzeichnis.",
+      "work.c14H3": "Friseur- & Kosmetiksalon — Steglitz, Berlin",
+      "work.c14P": "Zartes Rosé und tiefes Pflaumenrot um ein Portrait im Bogenausschnitt — eine zweisprachige Salonseite auf Deutsch und Polnisch, mit selbst gehosteter Karte, die ohne Google-Aufruf lädt.",
+      "work.c15H3": "Kiezbäckerei — Friedrichshain, Berlin",
+      "work.c15P": "Buttergelb mit Markisen-Bögen und einem Ofenbogen im Hero — für eine Kiezbäckerei mit drei Läden, deren Arbeitstag um fünf Uhr früh beginnt.",
+      "work.c16H3": "Barbershop — Friedrichshain, Berlin",
+      "work.c16P": "Warmes Bone und tiefes Tannengrün mit Messing — ein fotografischer Split-Hero und eine Preisliste wie ein Kontobuch, für einen 5,0★-Barbier in der Proskauer Straße.",
       "work.c3H3": "Café & mobile Cocktailbar — Berlin",
       "work.c3P": "Retro-Plakat auf Karamell — Briefmarken-Rahmen, Sticker und eine Kreidetafel als Karte für ein Fenster-Café in Friedrichshain.",
       "work.c4H3": "Yogastudio — Prenzlauer Berg",
       "work.c4P": "Ruhiges, editoriales Design für ein Studio mit Zahl-was-du-kannst-Prinzip.",
       "work.c5H3": "Georgische Bäckerei — Wrocław",
-      "work.c5P": "Bento-Mosaik-Hero und Scroll-Snap-Speisekarte für eine Bäckerei auf dem Weg zu fünf Filialen.",
+      "work.c5P": "Tiefes Weinrot und Gold: das georgische Wort für Brot — პური — als Hero gesetzt und wie ein Wörterbucheintrag erklärt, über einer Scroll-Snap-Theke.",
       "work.c6H3": "Tagescafé — Berlin",
       "work.c6P": "Morgentisch-Design: runde Tellerfotos, Delfter Blau und eine Karte, die dem Tagesverlauf folgt.",
       "work.c7H3": "Blumenladen — Friedrichshain, Berlin",
@@ -428,8 +463,6 @@
       "work.c10P": "Ein Letterpress-Plakat in Barber-Pole-Rot, Weiß und Marineblau — riesige Displayschrift, eine Preisliste in Rot auf Weiß und eine Polaroid-Wand für einen 5,0★-Barbershop.",
       "work.c11H3": "Zahnarztpraxis — Friedrichshain, Berlin",
       "work.c11P": "Ein Fresh-Smile-Design in zartem Himmelblau — organisch beschnittenes Hero-Foto, schwebende Termin-Badges und ein Besuch in vier Schritten als Zeitstrahl, für eine Familienpraxis mit Vertrauen seit 1992.",
-      "work.c12H3": "Sanitär & Leckortung — Wrocław (Breslau)",
-      "work.c12P": "Ein sachliches Handwerker-Design in Anthrazit und Petrol — aufgebaut um Notdienst-Anrufe und Leckortung für einen 5,0★-Sanitärbetrieb.",
       "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
       "contact.eyebrow": "Kontakt", "contact.h2": "Haben Sie ein Unternehmen, das eine bessere Website verdient?",
       "contact.p": "Erzählen Sie mir, was Sie tun und wo — ich antworte mit einer ehrlichen Einschätzung und, wenn es passt, einem kostenlosen ersten Design Ihrer Startseite. Ganz unverbindlich.",
@@ -449,17 +482,21 @@
       "work.visit": "Zobacz cwioro-robotyziemne.pl →",
       "work.featureQuote": "„Wcześniej miałem tylko ogłoszenie na OLX. Bartosz zajął się wszystkim — domeną, tekstami, całą resztą — i teraz mam porządną stronę, którą po prostu wysyłam klientom.”",
       "work.featureCite": "Tomasz Ćwioro — M.K.T Transport i Roboty Ziemne",
-      "work.tagConcept3": "Projekt koncepcyjny", "work.tagConcept4": "Projekt koncepcyjny",
-      "work.tagConcept5": "Projekt koncepcyjny", "work.tagConcept6": "Projekt koncepcyjny",
-      "work.tagConcept7": "Projekt koncepcyjny", "work.tagConcept8": "Projekt koncepcyjny",
-      "work.tagConcept9": "Projekt koncepcyjny", "work.tagConcept10": "Projekt koncepcyjny",
-      "work.tagConcept11": "Projekt koncepcyjny · Nowy", "work.tagConcept12": "Projekt koncepcyjny",
+      "work.tagConcept": "Projekt koncepcyjny", "work.tagConceptNew": "Projekt koncepcyjny · Nowy",
+      "work.c13H3": "Hydroizolacja i docieplenia — Berlin",
+      "work.c13P": "Chłodny beton i odblaskowa limonka dla specjalisty od dachów płaskich — w hero przekrój dachu ciepłego, warstwa po warstwie do najechania kursorem, a usługi ułożone jak prawdziwy kosztorys budowlany.",
+      "work.c14H3": "Salon fryzjersko-kosmetyczny — Berlin Steglitz",
+      "work.c14P": "Delikatny róż i głęboka śliwka wokół portretu w łukowym kadrze — dwujęzyczna strona salonu po niemiecku i po polsku, z własną mapą, która ładuje się bez odpytywania Google.",
+      "work.c15H3": "Piekarnia osiedlowa — Berlin Friedrichshain",
+      "work.c15P": "Maślana żółć, falbany markizy i łuk pieca chlebowego w hero — dla lokalnej piekarni z trzema sklepami, której dzień pracy zaczyna się o piątej rano.",
+      "work.c16H3": "Barbershop — Berlin Friedrichshain",
+      "work.c16P": "Ciepła kość słoniowa i głęboka zieleń jodły z mosiądzem — fotograficzny hero w podziale i cennik prowadzony jak księga rachunkowa, dla barbera z oceną 5,0★ przy Proskauer Straße.",
       "work.c3H3": "Kawiarnia i mobilny bar koktajlowy — Berlin",
       "work.c3P": "Retro plakat na karmelowym tle — kadr jak znaczek pocztowy, naklejki i menu na kredowej tablicy dla kawiarni „z okna” w Friedrichshain.",
       "work.c4H3": "Studio jogi — Prenzlauer Berg",
       "work.c4P": "Spokojny, magazynowy styl dla studia, w którym płacisz tyle, ile możesz.",
       "work.c5H3": "Gruzińska piekarnia — Wrocław",
-      "work.c5P": "Mozaika bento i menu ze scroll-snap dla piekarni rozrastającej się do pięciu lokali.",
+      "work.c5P": "Głęboka czerwień wina i złoto: gruzińskie słowo „chleb” — პური — jako główny element, opisane jak hasło ze słownika, nad menu ze scroll-snap.",
       "work.c6H3": "Kawiarnia śniadaniowa — Berlin",
       "work.c6P": "Projekt w duchu porannego stołu: okrągłe zdjęcia talerzy, błękit delft i menu płynące z porami dnia.",
       "work.c7H3": "Kwiaciarnia — Berlin Friedrichshain",
@@ -472,8 +509,6 @@
       "work.c10P": "Letterpressowy plakat w barberskiej czerwieni, bieli i granacie — ogromna typografia, cennik czerwienią na białym i ściana polaroidów dla barbershopu z oceną 5,0★.",
       "work.c11H3": "Gabinet stomatologiczny — Berlin Friedrichshain",
       "work.c11P": "Projekt „świeżego uśmiechu” w bladym błękicie — zdjęcie w organicznym kadrze, pływające plakietki rezerwacji i wizyta w czterech krokach na osi czasu, dla rodzinnego gabinetu cieszącego się zaufaniem od 1992 roku.",
-      "work.c12H3": "Hydraulik i wykrywanie wycieków — Wrocław",
-      "work.c12P": "Rzeczowy, fachowy projekt w graficie i morskiej zieleni — zbudowany wokół pilnych zgłoszeń i diagnostyki wycieków dla firmy hydraulicznej z oceną 5,0★.",
       "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
       "contact.eyebrow": "Kontakt", "contact.h2": "Masz firmę, która zasługuje na lepszą stronę?",
       "contact.p": "Napisz, czym się zajmujesz i gdzie działasz — odpowiem szczerą poradą, a jeśli będzie to miało sens, przygotuję bezpłatny wstępny projekt Twojej strony głównej. Bez żadnych zobowiązań.",

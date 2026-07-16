@@ -153,15 +153,22 @@
     @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .m-group { display: flex; gap: 22px; padding-right: 22px; }
     .m-card {
-      width: 330px; flex: none; background: var(--card); border: 1px solid var(--line);
+      position: relative; width: 330px; flex: none; background: var(--card); border: 1px solid var(--line);
       border-radius: var(--radius); overflow: hidden; text-decoration: none;
       transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
     .m-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
-    .m-card img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
-    .m-card .pad { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 13px 16px 15px; min-width: 0; }
-    .m-card .m-title { font-family: "Sora", sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .m-card .go { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--accent); white-space: nowrap; }
+    .m-card img { display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
+    /* the name is furniture at rest — it surfaces only when a card is hovered (which also pauses the row) */
+    .m-cap {
+      position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between;
+      align-items: baseline; gap: 10px; min-width: 0; padding: 38px 16px 14px;
+      background: linear-gradient(to top, rgba(16, 18, 22, 0.9) 0%, rgba(16, 18, 22, 0.62) 55%, rgba(16, 18, 22, 0) 100%);
+      opacity: 0; transition: opacity 0.22s ease;
+    }
+    .m-card:hover .m-cap, .m-card:focus-visible .m-cap { opacity: 1; }
+    .m-cap .m-title { font-family: "Sora", sans-serif; font-weight: 600; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .m-cap .go { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: #fff; white-space: nowrap; }
     .work-cta { margin-top: 34px; }
     @media (prefers-reduced-motion: reduce) {
       .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
@@ -353,47 +360,55 @@
   <div class="marquee reveal" aria-label="Concept design previews">
     <div class="marquee-track">
       <div class="m-group">
+        <a class="m-card" href="https://clearsitestudio.de/demo/beauty-woman/" target="_blank" rel="noopener">
+          <img src="assets/beautywoman-hero.jpg" alt="Beauty Woman by Violetta salon concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c14H3">Hair &amp; beauty — Berlin</span><span class="go">→</span></span>
+        </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener">
           <img src="assets/ayaz-hero.jpg" alt="Ayaz Barber Shop concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c10H3">Barber shop — Berlin</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
-          <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
-          <img src="assets/leos-hero.jpg" alt="Leo's café concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c10H3">Barber — Prenzlauer Berg</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener">
           <img src="assets/strandt-hero.jpg" alt="Petra Strandt dental practice concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
         </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener">
-          <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
+        <a class="m-card" href="https://clearsitestudio.de/demo/shelby/" target="_blank" rel="noopener">
+          <img src="assets/shelby-hero.jpg" alt="Tommy Shelby Barber concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c16H3">Barber — Friedrichshain</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/magro-bau/" target="_blank" rel="noopener">
+          <img src="assets/magro-hero.jpg" alt="Magro Bau roof waterproofing concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c13H3">Waterproofing — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener">
+          <img src="assets/yasmin-hero.jpg" alt="Blumenhaus Yasmin florist concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
         </a>
       </div>
       <div class="m-group" aria-hidden="true">
+        <a class="m-card" href="https://clearsitestudio.de/demo/beauty-woman/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/beautywoman-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c14H3">Hair &amp; beauty — Berlin</span><span class="go">→</span></span>
+        </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/ayaz/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/ayaz-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c10H3">Barber shop — Berlin</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener" tabindex="-1">
-          <img src="assets/yasmin-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener" tabindex="-1">
-          <img src="assets/leos-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c10H3">Barber — Prenzlauer Berg</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/strandt/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/strandt-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c11H3">Dental practice — Berlin</span><span class="go">→</span></span>
         </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener" tabindex="-1">
-          <img src="assets/bobmurphy-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
+        <a class="m-card" href="https://clearsitestudio.de/demo/shelby/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/shelby-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c16H3">Barber — Friedrichshain</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/magro-bau/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/magro-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c13H3">Waterproofing — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/yasmin-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c7H3">Flower shop — Berlin</span><span class="go">→</span></span>
         </a>
       </div>
     </div>
@@ -402,47 +417,63 @@
   <div class="marquee marquee-rev reveal" aria-label="More concept design previews">
     <div class="marquee-track">
       <div class="m-group">
+        <a class="m-card" href="https://clearsitestudio.de/demo/backfee/" target="_blank" rel="noopener">
+          <img src="assets/backfee-hero.jpg" alt="Bäckerei Backfee concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c15H3">Bakery — Friedrichshain</span><span class="go">→</span></span>
+        </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener">
           <img src="assets/blackcat-hero.jpg" alt="Black Cat tattoo studio concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener">
+          <img src="assets/leos-hero.jpg" alt="Leo’s café concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener">
           <img src="assets/kraft-hero.jpg" alt="Kraft Sport ski and bike shop concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener">
           <img src="assets/greenyoga-hero.jpg" alt="Green Yoga studio concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener">
+          <img src="assets/bobmurphy-hero.jpg" alt="Bob Murphy café concept design" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener">
           <img src="assets/puri-hero.jpg" alt="PURI Georgian bakery concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener">
-          <img src="assets/mikmat-hero.jpg" alt="MikMat Instal plumbing concept design" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c12H3">Plumbing — Wrocław</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
         </a>
       </div>
       <div class="m-group" aria-hidden="true">
+        <a class="m-card" href="https://clearsitestudio.de/demo/backfee/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/backfee-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c15H3">Bakery — Friedrichshain</span><span class="go">→</span></span>
+        </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/blackcat/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/blackcat-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c9H3">Tattoo studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/leos-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c6H3">All-day café — Berlin</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/kraft/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/kraft-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c8H3">Ski &amp; bike shop — Wrocław</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/green-yoga/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/greenyoga-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c4H3">Yoga studio — Berlin</span><span class="go">→</span></span>
+        </a>
+        <a class="m-card" href="https://clearsitestudio.de/demo/bob-murphy/" target="_blank" rel="noopener" tabindex="-1">
+          <img src="assets/bobmurphy-hero.jpg" alt="" loading="lazy">
+          <span class="m-cap"><span class="m-title" data-i18n="work.c3H3">Café &amp; cocktail bar — Berlin</span><span class="go">→</span></span>
         </a>
         <a class="m-card" href="https://clearsitestudio.de/demo/puri/" target="_blank" rel="noopener" tabindex="-1">
           <img src="assets/puri-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
-        </a>
-        <a class="m-card" href="https://clearsitestudio.de/demo/mikmat-instal/" target="_blank" rel="noopener" tabindex="-1">
-          <img src="assets/mikmat-hero.jpg" alt="" loading="lazy">
-          <span class="pad"><span class="m-title" data-i18n="work.c12H3">Plumbing — Wrocław</span><span class="go">→</span></span>
+          <span class="m-cap"><span class="m-title" data-i18n="work.c5H3">Georgian bakery — Wrocław</span><span class="go">→</span></span>
         </a>
       </div>
     </div>
@@ -699,9 +730,12 @@
       "work.c7H3": "Flower shop — Berlin",
       "work.c8H3": "Ski & bike shop — Wrocław",
       "work.c9H3": "Tattoo studio — Berlin",
-      "work.c10H3": "Barber shop — Berlin",
+      "work.c10H3": "Barber — Prenzlauer Berg",
       "work.c11H3": "Dental practice — Berlin",
-      "work.c12H3": "Plumbing — Wrocław",
+      "work.c13H3": "Waterproofing — Berlin",
+      "work.c14H3": "Hair & beauty — Berlin",
+      "work.c15H3": "Bakery — Friedrichshain",
+      "work.c16H3": "Barber — Friedrichshain",
       "work.note": "Concept designs are working prototypes created for real local businesses, using licensed stock photography. The full build — with your photos, your colours and your content — happens on commission.",
       "proc.eyebrow": "How it works", "proc.h2": "From first message to launch — three steps.",
       "proc.s1H3": "Free first look",
@@ -773,14 +807,17 @@
       "work.eyebrow": "Ausgewählte Projekte", "work.h2": "Gebaut für Anrufe, nicht nur für Klicks.",
       "work.c3H3": "Café & Cocktailbar — Berlin",
       "work.c4H3": "Yogastudio — Berlin",
-      "work.c5H3": "Bäckerei — Wrocław",
+      "work.c5H3": "Georgische Bäckerei — Wrocław",
       "work.c6H3": "Tagescafé — Berlin",
       "work.c7H3": "Blumenladen — Berlin",
       "work.c8H3": "Ski & Fahrrad — Wrocław",
       "work.c9H3": "Tattoo-Studio — Berlin",
-      "work.c10H3": "Barbershop — Berlin",
+      "work.c10H3": "Barbier — Prenzlauer Berg",
       "work.c11H3": "Zahnarztpraxis — Berlin",
-      "work.c12H3": "Sanitär — Wrocław",
+      "work.c13H3": "Abdichtung — Berlin",
+      "work.c14H3": "Friseur & Kosmetik — Berlin",
+      "work.c15H3": "Kiezbäckerei — Berlin",
+      "work.c16H3": "Barbier — Friedrichshain",
       "work.note": "Konzeptdesigns sind funktionierende Prototypen, erstellt für echte lokale Unternehmen mit lizenzierten Stockfotos. Die vollständige Umsetzung — mit Ihren Fotos, Ihren Farben und Ihren Inhalten — erfolgt im Auftrag.",
       "proc.eyebrow": "So läuft's", "proc.h2": "Von der ersten Nachricht bis zum Launch — drei Schritte.",
       "proc.s1H3": "Kostenloser erster Entwurf",
@@ -852,14 +889,17 @@
       "work.eyebrow": "Wybrane realizacje", "work.h2": "Budowane tak, żeby dzwonili — nie tylko klikali.",
       "work.c3H3": "Kawiarnia i bar — Berlin",
       "work.c4H3": "Studio jogi — Berlin",
-      "work.c5H3": "Piekarnia — Wrocław",
+      "work.c5H3": "Gruzińska piekarnia — Wrocław",
       "work.c6H3": "Kawiarnia — Berlin",
       "work.c7H3": "Kwiaciarnia — Berlin",
       "work.c8H3": "Narty i rowery — Wrocław",
       "work.c9H3": "Studio tatuażu — Berlin",
-      "work.c10H3": "Barbershop — Berlin",
+      "work.c10H3": "Barber — Prenzlauer Berg",
       "work.c11H3": "Stomatolog — Berlin",
-      "work.c12H3": "Hydraulik — Wrocław",
+      "work.c13H3": "Hydroizolacja — Berlin",
+      "work.c14H3": "Salon fryzjerski — Berlin",
+      "work.c15H3": "Piekarnia — Berlin",
+      "work.c16H3": "Barber — Friedrichshain",
       "work.note": "Projekty koncepcyjne to działające prototypy przygotowane dla prawdziwych lokalnych firm, z użyciem licencjonowanych zdjęć stockowych. Pełna wersja — z Twoimi zdjęciami, kolorami i treścią — powstaje na zamówienie.",
       "proc.eyebrow": "Jak to działa", "proc.h2": "Od pierwszej wiadomości do startu — trzy kroki.",
       "proc.s1H3": "Bezpłatny pierwszy projekt",
