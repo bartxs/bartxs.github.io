@@ -118,8 +118,18 @@
       display: flex; flex-direction: column; grid-column: span 2;
     }
     .concept:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08); }
-    .concept img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; transition: transform 0.35s ease; }
-    .concept:hover img { transform: scale(1.03); }
+    .concept img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
+    /* no hover zoom: the card now plays the real page, and scaling it crops the design */
+    /* hover preview: the .card-shot wrapper + <video> are mounted by JS, so the still
+       image is what ships in the HTML and remains the whole card on touch/reduced motion */
+    .card-shot { position: relative; display: block; overflow: hidden; }
+    .card-shot video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    }
+    .card-shot video.is-playing { opacity: 1; }
+    .concept-wide .card-shot { height: 100%; min-height: 280px; }
     .concept .pad { padding: 18px 20px 20px; }
     .concept .tag { margin-bottom: 12px; }
     .concept h3 { font-size: 1.02rem; margin: 0 0 6px; }
@@ -558,6 +568,58 @@
   const browser = (navigator.language || "").slice(0, 2).toLowerCase();
   const initial = [param, saved, browser].find((l) => l && I18N[l]) || "en";
   setLang(initial);
+
+  // ---------- card previews: hover a card and the demo scrolls itself ----------
+  // Same scroll captures that go out with outreach (capture.mjs), re-encoded small.
+  // Nothing is fetched until a deliberate hover/focus — preload="none" and src is only
+  // assigned on first interaction — so first paint costs exactly what it did before.
+  (() => {
+    // slugs with an assets/preview/<slug>.mp4 — Yasmin has no scroll capture yet
+    const PREVIEWS = new Set(["ayaz", "backfee", "beauty-woman", "blackcat", "bob-murphy",
+      "green-yoga", "kraft", "leos", "magro-bau", "oktan", "puri", "shelby", "strandt", "yasmin"]);
+
+    // Motion is the entire point, so honour the OS switch. Touch devices keep the still:
+    // a tap already opens the real demo, which beats a video, and this is someone's data plan.
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const saveData = !!(navigator.connection && navigator.connection.saveData);
+    if (reduce || !canHover || saveData) return;
+
+    for (const card of document.querySelectorAll(".m-card, .concept")) {
+      const slug = (card.getAttribute("href") || "").match(/\/demo\/([^/]+)\//);
+      if (!slug || !PREVIEWS.has(slug[1])) continue;
+      const img = card.querySelector("img");
+      if (!img) continue;
+
+      const shot = document.createElement("span");
+      shot.className = "card-shot";
+      img.parentNode.insertBefore(shot, img);
+      shot.appendChild(img);
+
+      const v = document.createElement("video");
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
+      v.setAttribute("aria-hidden", "true");   // decorative; the still + caption carry the meaning
+      v.tabIndex = -1;
+      shot.appendChild(v);
+
+      // fade in only once frames actually exist, or the card flashes black first
+      v.addEventListener("playing", () => v.classList.add("is-playing"));
+
+      const start = () => {
+        if (!v.src) v.src = "assets/preview/" + slug[1] + ".mp4";
+        v.play().catch(() => {});              // refused autoplay just leaves the still up
+      };
+      const stop = () => {
+        v.classList.remove("is-playing");
+        v.pause();
+        if (v.readyState > 0) v.currentTime = 0;  // next hover restarts from the top of the page
+      };
+      card.addEventListener("mouseenter", start);
+      card.addEventListener("mouseleave", stop);
+      card.addEventListener("focus", start);
+      card.addEventListener("blur", stop);
+    }
+  })();
 </script>
 
 </body>

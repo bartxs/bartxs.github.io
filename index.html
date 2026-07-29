@@ -111,22 +111,31 @@
     }
     .offer:hover { border-color: var(--accent); }
     @media (min-width: 1080px) { .offer { white-space: nowrap; } }
-    .stack { position: relative; height: 470px; }
+    /* 520px still clears the text column (583px), so the 4th card does not make
+       the hero taller — the cards give up a little width instead (66% -> 62%). */
+    .stack { position: relative; height: 520px; }
     .stack-card {
-      position: absolute; width: 66%; display: block; overflow: hidden;
+      position: absolute; width: 62%; display: block; overflow: hidden;
       border-radius: 10px; border: 1px solid var(--line); background: #fff;
       box-shadow: 0 24px 60px -18px rgba(20, 22, 26, 0.28);
       transform: rotate(var(--rot));
+      /* z-index is deliberately NOT transitioned. Delaying its revert (so the card
+         settles before dropping back under its neighbours) looks marginally nicer,
+         but it makes "returns to its place" depend on a transition completing — and
+         a stalled transition leaves the card stuck on top, which is the exact
+         behaviour this replaced. Instant revert cannot get stuck. */
       transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
       will-change: transform;
     }
     .stack-card img { display: block; width: 100%; }
-    .stack-card:nth-child(1) { top: 0; left: 0; --rot: -2deg; z-index: 3; }
-    .stack-card:nth-child(2) { top: 122px; right: 0; --rot: 2.2deg; z-index: 2; }
-    .stack-card:nth-child(3) { bottom: 0; left: 8%; --rot: -1.2deg; z-index: 1; }
+    .stack-card:nth-child(1) { top: 0;     left: 0;  --rot: -2deg;   z-index: 4; }
+    .stack-card:nth-child(2) { top: 96px;  right: 0; --rot: 2.2deg;  z-index: 3; }
+    .stack-card:nth-child(3) { top: 192px; left: 8%; --rot: -1.2deg; z-index: 2; }
+    .stack-card:nth-child(4) { top: 288px; right: 4%; --rot: 1.6deg; z-index: 1; }
     .stack-card:hover, .stack-card:focus-visible {
       transform: rotate(0deg) translateY(-8px) scale(1.05);
       box-shadow: 0 36px 74px -20px rgba(20, 22, 26, 0.42);
+      z-index: 10;            /* on top only WHILE hovered, then straight back to its place */
     }
     @media (prefers-reduced-motion: reduce) { .stack-card { transition: none; } }
     .langs { margin-top: 32px; display: flex; gap: 10px; flex-wrap: wrap; }
@@ -169,6 +178,15 @@
     .m-card:hover .m-cap, .m-card:focus-visible .m-cap { opacity: 1; }
     .m-cap .m-title { font-family: "Sora", sans-serif; font-weight: 600; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .m-cap .go { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: #fff; white-space: nowrap; }
+    /* hover preview: the .card-shot wrapper + <video> are mounted by JS, so the still
+       image is what ships in the HTML and remains the whole card on touch/reduced motion */
+    .card-shot { position: relative; display: block; overflow: hidden; }
+    .card-shot video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    }
+    .card-shot video.is-playing { opacity: 1; }
     .work-cta { margin-top: 34px; }
     @media (prefers-reduced-motion: reduce) {
       .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
@@ -333,7 +351,8 @@
         <span class="lang">Polski</span>
       </div>
     </div>
-    <!-- hero collage — user's pinned picks (Yasmin/BlackCat/Leo's), do NOT swap for new projects -->
+    <!-- hero collage — user's pinned picks (Yasmin/BlackCat/Leo's/Magro, 4th added 2026-07-28).
+         Fixed selection: do NOT swap or auto-cycle these when new projects are added. -->
     <div class="stack">
       <a class="stack-card" href="https://clearsitestudio.de/demo/yasmin/" target="_blank" rel="noopener" aria-label="Blumenhaus Yasmin — concept design">
         <img src="assets/yasmin-hero.jpg" alt="" loading="eager">
@@ -343,6 +362,9 @@
       </a>
       <a class="stack-card" href="https://clearsitestudio.de/demo/leos/" target="_blank" rel="noopener" aria-label="Leo's café — concept design">
         <img src="assets/leos-hero.jpg" alt="" loading="eager">
+      </a>
+      <a class="stack-card" href="https://clearsitestudio.de/demo/magro-bau/" target="_blank" rel="noopener" aria-label="Magro Bau — concept design">
+        <img src="assets/magro-hero.jpg" alt="" loading="eager">
       </a>
     </div>
   </div>
@@ -975,15 +997,65 @@
   const initial = [param, saved, browser].find((l) => l && I18N[l]) || "en";
   setLang(initial);
 
-  // ---------- hero collage: last-hovered/focused card rises and stays on top ----------
+  // ---------- card previews: hover a card and the demo scrolls itself ----------
+  // Same scroll captures that go out with outreach (capture.mjs), re-encoded small.
+  // Nothing is fetched until a deliberate hover/focus — preload="none" and src is only
+  // assigned on first interaction — so first paint costs exactly what it did before.
   (() => {
-    let z = 10;
-    document.querySelectorAll(".stack-card").forEach((card) => {
-      const raise = () => { card.style.zIndex = String(++z); };
-      card.addEventListener("mouseenter", raise);
-      card.addEventListener("focus", raise);
-    });
+    // slugs with an assets/preview/<slug>.mp4 — Yasmin has no scroll capture yet
+    const PREVIEWS = new Set(["ayaz", "backfee", "beauty-woman", "blackcat", "bob-murphy",
+      "green-yoga", "kraft", "leos", "magro-bau", "oktan", "puri", "shelby", "strandt", "yasmin"]);
+
+    // Motion is the entire point, so honour the OS switch. Touch devices keep the still:
+    // a tap already opens the real demo, which beats a video, and this is someone's data plan.
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const saveData = !!(navigator.connection && navigator.connection.saveData);
+    if (reduce || !canHover || saveData) return;
+
+    // .stack-card = the hero collage; it already lifts and straightens on hover,
+    // and the preview plays inside that same gesture.
+    for (const card of document.querySelectorAll(".m-card, .concept, .stack-card")) {
+      const slug = (card.getAttribute("href") || "").match(/\/demo\/([^/]+)\//);
+      if (!slug || !PREVIEWS.has(slug[1])) continue;
+      const img = card.querySelector("img");
+      if (!img) continue;
+
+      const shot = document.createElement("span");
+      shot.className = "card-shot";
+      img.parentNode.insertBefore(shot, img);
+      shot.appendChild(img);
+
+      const v = document.createElement("video");
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
+      v.setAttribute("aria-hidden", "true");   // decorative; the still + caption carry the meaning
+      v.tabIndex = -1;
+      shot.appendChild(v);
+
+      // fade in only once frames actually exist, or the card flashes black first
+      v.addEventListener("playing", () => v.classList.add("is-playing"));
+
+      const start = () => {
+        if (!v.src) v.src = "assets/preview/" + slug[1] + ".mp4";
+        v.play().catch(() => {});              // refused autoplay just leaves the still up
+      };
+      const stop = () => {
+        v.classList.remove("is-playing");
+        v.pause();
+        if (v.readyState > 0) v.currentTime = 0;  // next hover restarts from the top of the page
+      };
+      card.addEventListener("mouseenter", start);
+      card.addEventListener("mouseleave", stop);
+      card.addEventListener("focus", start);
+      card.addEventListener("blur", stop);
+    }
   })();
+
+  // The hero collage used to keep the last-hovered card permanently on top, via a
+  // JS z-counter writing an inline z-index. That is now pure CSS (`.stack-card:hover
+  // { z-index: 10 }` + a delayed revert) so the card returns to its own place in the
+  // stack when you leave it. Do not reintroduce the counter: an inline z-index beats
+  // the stylesheet, so the two cannot coexist — the JS would silently win.
 </script>
 
 </body>
