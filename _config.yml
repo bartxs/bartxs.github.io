@@ -1,0 +1,13 @@
+# GitHub Pages builds this repo with Jekyll (there is no .nojekyll file). Everything
+# not excluded here is copied to the live site as-is.
+#
+# src/ holds the PAGE SOURCES — the English markup plus the i18n dictionary that
+# build.mjs renders into /, /en/ and /pl/. Published, it would be a fourth copy of the
+# homepage at /src/index.html: duplicate content, in the wrong language, with no
+# canonical pointing home. build.mjs itself would simply be readable at /build.mjs.
+#
+# Neither is secret — this repo is public — but neither belongs in the index.
+exclude:
+  - src
+  - build.mjs
+  - _config.yml

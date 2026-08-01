@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Outreach demos. These are landing pages built FOR other businesses — some of them
+# real companies that never asked to appear on this domain, some fictional vertical
+# kits. They must keep returning 200 because sent outreach links point at them, but
+# they should not be indexed as content about ClearSite Studio. The demos also carry
+# their own noindex meta tag; this is the belt to that pair of braces.
+Disallow: /demo/
+
+Sitemap: https://clearsitestudio.de/sitemap.xml
