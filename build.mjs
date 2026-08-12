@@ -116,7 +116,7 @@ async function renderPage(browser, page, lang, dict) {
     .replace(/href="index\.html"/g, `href="${base}"`)
     .replace(/href="projects\.html"/g, `href="${base}projects.html"`)
     .replace(new RegExp(`href="${ORIGIN}/projects\\.html"`, "g"), `href="${base}projects.html"`)
-    .replace(/href="(impressum|datenschutz)\.html"/g, 'href="/$1.html"');
+    .replace(/href="(impressum|datenschutz|agb|widerruf)\.html"/g, 'href="/$1.html"');
 
   // Impressum and Datenschutz stay single German documents at the root — they are
   // legal texts for one German business, not content to translate per locale.
@@ -213,7 +213,7 @@ async function writeSitemap(entries) {
     }).join("\n")
   ).join("\n");
 
-  const legal = ["impressum.html", "datenschutz.html"]
+  const legal = ["impressum.html", "datenschutz.html", "agb.html", "widerruf.html"]
     .map((f) => `  <url>\n    <loc>${ORIGIN}/${f}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`)
     .join("\n");
 

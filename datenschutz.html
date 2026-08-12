@@ -20,10 +20,14 @@
       font-size: 16.5px; line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
-    h1, h2 { font-family: "Sora", sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
+    h1, h2, h3 { font-family: "Sora", sans-serif; line-height: 1.15; letter-spacing: -0.02em;
+      /* German compounds ("Datenschutzerklärung", "Geschäftsbedingungen") are
+         wider than a 320px viewport's content box at this size and would push
+         the whole page sideways. Measured, not guessed. */
+      overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
     a { color: inherit; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-    nav { position: sticky; top: 0; background: rgba(250,250,247,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav { position: sticky; top: 0; background: rgba(250,250,247,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); z-index: 5; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .logo { font-family: "Sora", sans-serif; font-weight: 700; font-size: 1.08rem; text-decoration: none; }
     .logo span { color: var(--accent); }
@@ -31,11 +35,30 @@
     .back:hover { color: var(--ink); }
     main { padding: 56px 0 80px; }
     .mono { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-    h1 { font-size: 2rem; margin: 10px 0 34px; }
+    h1 { font-size: 2rem; margin: 10px 0 26px; }
     h2 { font-size: 1.15rem; margin: 34px 0 10px; }
+    h3 { font-size: 1rem; margin: 24px 0 8px; }
     p, li { color: var(--muted); margin: 0 0 12px; }
     ul { padding-left: 20px; }
-    p strong { color: var(--ink); }
+    li { margin-bottom: 6px; }
+    p strong, li strong { color: var(--ink); }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
+    blockquote { margin: 16px 0 16px 2px; padding: 2px 0 2px 16px; border-left: 3px solid var(--accent); color: var(--muted); }
+    code { font-family: "IBM Plex Mono", monospace; font-size: 0.86em; color: var(--muted);
+           overflow-wrap: anywhere; }
+    /* The Muster-Widerrufsformular's fill-in runs are sized for A4 paper. On a
+       phone a literal row of underscores overflows the viewport (measured: 578px
+       at a 375px width), so on the web they become a writing rule instead. */
+    .blank { display: block; border-bottom: 1px solid #c9c6bd; height: 1.7em; margin: 0 0 14px; }
+    .table-scroll { overflow-x: auto; margin: 0 0 18px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+    th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; color: var(--muted); }
+    th { background: #f2f1ec; color: var(--ink); font-weight: 600; }
+    .doc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 8px; }
+    .doc-actions a { display: inline-block; font-size: 0.9rem; font-weight: 500;
+      text-decoration: none; color: var(--accent); background: var(--accent-soft);
+      border-radius: 999px; padding: 7px 15px; }
+    .doc-actions a:hover { background: #e3e8fd; }
     footer { border-top: 1px solid var(--line); padding: 26px 0; }
     .foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 0.88rem; }
     .foot a { color: var(--muted); text-decoration: none; }
@@ -54,45 +77,55 @@
 <main>
   <div class="wrap">
     <span class="mono">Rechtliches</span>
-    <h1>Datenschutzerklärung</h1>
-
-    <h2>1. Verantwortlicher</h2>
-    <p>
-      Bartosz Soltysik — ClearSite Studio<br>
-      Petersburger Str. 66, Hinterhaus, Etage 1, 10249 Berlin<br>
-      E-Mail: <a href="mailto:info@clearsitestudio.de">info@clearsitestudio.de</a>
-    </p>
-
-    <h2>2. Allgemeines</h2>
-    <p>Diese Website ist eine rein statische Informationsseite. Es werden keine Cookies gesetzt, keine Analyse- oder Tracking-Dienste eingesetzt und keine Kontaktformulare betrieben. Schriftarten und alle weiteren Ressourcen werden lokal von diesem Server geladen — es werden keine Verbindungen zu Drittanbietern (z. B. Google Fonts) aufgebaut.</p>
-
-    <h2>3. Hosting (GitHub Pages)</h2>
-    <p>Diese Website wird bei GitHub Pages gehostet, einem Dienst der GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA. Beim Aufruf der Website verarbeitet GitHub technisch notwendige Daten, insbesondere die IP-Adresse des aufrufenden Geräts, in sogenannten Server-Logfiles. Dies ist für die Auslieferung und die Sicherheit der Website technisch erforderlich.</p>
-    <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren und effizienten Betrieb der Website). GitHub ist unter dem EU-US Data Privacy Framework zertifiziert. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
-
-    <h2>4. Kontaktaufnahme per E-Mail</h2>
-    <p>Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben (E-Mail-Adresse, Name, Inhalt der Nachricht) zum Zweck der Bearbeitung der Anfrage verarbeitet und gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung bzw. Durchführung eines Vertrags) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen). Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-
-    <h2>5. Ihre Rechte</h2>
-    <p>Sie haben gegenüber uns folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:</p>
-    <ul>
-      <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
-      <li>Recht auf Berichtigung (Art. 16 DSGVO) und Löschung (Art. 17 DSGVO)</li>
-      <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-      <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
-      <li>Widerspruchsrecht gegen die Verarbeitung (Art. 21 DSGVO)</li>
-    </ul>
-    <p>Sie haben zudem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig für Berlin: Berliner Beauftragte für Datenschutz und Informationsfreiheit, Alt-Moabit 59–61, 10555 Berlin.</p>
-
-    <h2>6. Aktualität</h2>
-    <p>Stand dieser Datenschutzerklärung: August 2026. Sie wird bei Bedarf angepasst, etwa wenn neue Funktionen (z. B. ein Kontaktformular) hinzukommen.</p>
+<h1>Datenschutzerklärung</h1>
+<div class="doc-actions"><a href="pdf/ClearSite-Studio-Datenschutzerklaerung.pdf" download>PDF herunterladen</a></div>
+<p><strong>ClearSite Studio · Inhaber: Bartosz Sołtysik</strong><br>Stand: August 2026</p>
+<p>Diese Datenschutzerklärung informiert Sie darüber, welche personenbezogenen Daten wir verarbeiten, zu welchen Zwecken und auf welcher Rechtsgrundlage dies geschieht und welche Rechte Ihnen zustehen. Sie gilt für unsere Website, für die Anbahnung und Durchführung von Aufträgen sowie für unsere Kommunikation über E-Mail, Telefon, Messenger und Online-Marktplätze.</p>
+<hr>
+<h2>1. Verantwortlicher</h2>
+<p><strong>ClearSite Studio</strong><br>Inhaber: Bartosz Sołtysik<br>Petersburger Str. 66, Hinterhaus, Etage 1<br>10249 Berlin, Deutschland<br>E-Mail: <a href="mailto:info@clearsitestudio.de">info@clearsitestudio.de</a></p>
+<p>Ein Datenschutzbeauftragter ist nicht bestellt; die gesetzlichen Voraussetzungen hierfür (§ 38 BDSG) liegen nicht vor.</p>
+<h2>2. Welche Daten wir verarbeiten</h2>
+<p>Je nach Anlass verarbeiten wir folgende Kategorien personenbezogener Daten:</p>
+<ul><li><strong>Stammdaten:</strong> Name, Firma, Anschrift, Rechtsform, Ansprechpartner</li><li><strong>Kontaktdaten:</strong> E-Mail-Adresse, Telefon- und Mobilnummer, Messenger-Kennung</li><li><strong>Vertrags- und Abrechnungsdaten:</strong> beauftragte Leistungen, Laufzeiten, Preise, Rechnungen, Zahlungsinformationen, Bankverbindung</li><li><strong>Inhaltsdaten:</strong> von Ihnen übermittelte Texte, Bilder, Logos und sonstige Materialien für Ihre Website</li><li><strong>Kommunikationsdaten:</strong> Inhalt und Metadaten von E-Mails, Nachrichten und Gesprächsnotizen</li><li><strong>Nutzungsdaten der Website:</strong> technische Zugriffsdaten (siehe Ziffer 8)</li></ul>
+<p>Die Angabe dieser Daten ist teils gesetzlich vorgeschrieben (z. B. für Rechnungen), teils zur Durchführung des Vertrags erforderlich. Ohne sie können wir einen Vertrag nicht abschließen oder durchführen.</p>
+<h2>3. Zwecke und Rechtsgrundlagen</h2>
+<p><strong>a) Anbahnung und Durchführung von Verträgen.</strong> Wir verarbeiten Ihre Daten, um Anfragen zu beantworten, Angebote und kostenlose Entwürfe zu erstellen, Verträge abzuschließen und die vereinbarten Leistungen zu erbringen (Gestaltung, Hosting, Domainregistrierung, Betreuung). <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. b DSGVO (Vertrag bzw. vorvertragliche Maßnahmen). Handelt es sich um eine Anfrage ohne Vertragsbezug: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen).</p>
+<p><strong>b) Rechnungsstellung, Buchhaltung und Steuern.</strong> <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit den handels- und steuerrechtlichen Aufbewahrungspflichten (§ 147 AO, § 257 HGB).</p>
+<p><strong>c) Kontaktaufnahme zu geschäftlichen Zwecken (Direktansprache).</strong> Wir sprechen Unternehmen gezielt an, um unsere Leistungen anzubieten. Die dabei verwendeten Kontaktdaten (Firmenname, Anschrift, geschäftliche Telefonnummer und E-Mail-Adresse, Angaben zur bestehenden Website) stammen aus <strong>öffentlich zugänglichen Quellen</strong> — insbesondere aus öffentlichen Branchen- und Kartendiensten, Unternehmenswebsites und Aushängen am Geschäftssitz. <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse ist die Ansprache potenzieller Geschäftskunden. Sie können dieser Verarbeitung jederzeit formlos widersprechen (siehe Ziffer 7); wir löschen Ihre Daten dann und kontaktieren Sie nicht erneut.</p>
+<p><strong>d) Geltendmachung und Abwehr von Rechtsansprüchen.</strong> <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p>Eine automatisierte Entscheidungsfindung einschließlich Profiling findet <strong>nicht</strong> statt.</p>
+<h2>4. Empfänger und Auftragsverarbeiter</h2>
+<p>Wir geben Ihre Daten nur weiter, soweit dies zur Vertragserfüllung erforderlich ist, Sie eingewilligt haben oder wir gesetzlich dazu verpflichtet sind. Empfänger können sein:</p>
+<div class="table-scroll"><table><thead><tr><th>Empfänger</th><th>Zweck</th></tr></thead><tbody><tr><td>Hosting-Dienstleister (u. a. GitHub, Inc., USA — GitHub Pages)</td><td>Bereitstellung von Websites und der eigenen Website</td></tr><tr><td>Domain-Registrare und Vergabestellen (u. a. DENIC eG)</td><td>Registrierung und Verwaltung Ihrer Domain</td></tr><tr><td>E-Mail- und Weiterleitungsdienste (u. a. ImprovMX, Google Ireland Ltd.)</td><td>E-Mail-Kommunikation und Weiterleitungen</td></tr><tr><td>Betreiber von Online-Marktplätzen (Kleinanzeigen GmbH)</td><td>Kommunikation über den Marktplatz-Chat</td></tr><tr><td>Messenger-Anbieter (WhatsApp Ireland Ltd. / Meta Platforms)</td><td>Kommunikation, sofern Sie diesen Kanal wählen</td></tr><tr><td>Telekommunikationsanbieter</td><td>Telefonie</td></tr><tr><td>Steuerberatung, Finanzbehörden</td><td>Buchführung und gesetzliche Pflichten</td></tr><tr><td>Rechtsberatung, Inkasso</td><td>nur im Streit- oder Verzugsfall</td></tr></tbody></table></div>
+<p>Mit Dienstleistern, die Daten in unserem Auftrag verarbeiten, bestehen Verträge zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+<h2>5. Datenübermittlung in Drittländer</h2>
+<p>Einige der genannten Dienstleister haben ihren Sitz in den USA oder verarbeiten Daten dort. Die Übermittlung erfolgt auf Grundlage eines Angemessenheitsbeschlusses der EU-Kommission (EU-US Data Privacy Framework), soweit der jeweilige Anbieter zertifiziert ist, andernfalls auf Grundlage der Standardvertragsklauseln der EU-Kommission gemäß Art. 46 Abs. 2 lit. c DSGVO. Trotz dieser Garantien kann ein mit dem europäischen Niveau vergleichbarer Schutz nicht in jedem Fall gewährleistet werden; insbesondere ist ein Zugriff durch US-Behörden nicht vollständig auszuschließen.</p>
+<p>Wenn Sie dies vermeiden möchten, nutzen Sie für die Kommunikation mit uns bitte Telefon oder Post.</p>
+<h2>6. Speicherdauer</h2>
+<p>Wir speichern personenbezogene Daten nur so lange, wie es für die genannten Zwecke erforderlich ist:</p>
+<ul><li><strong>Anfragen ohne Vertragsschluss:</strong> Löschung spätestens sechs Monate nach dem letzten Kontakt, sofern keine Aufbewahrungspflicht besteht.</li><li><strong>Vertragsdaten:</strong> für die Dauer des Vertrags und darüber hinaus bis zum Ablauf der gesetzlichen Verjährungs- und Aufbewahrungsfristen.</li><li><strong>Rechnungen und steuerlich relevante Unterlagen:</strong> 10 Jahre (§ 147 AO), Handelsbriefe 6 Jahre (§ 257 HGB).</li><li><strong>Widerspruch gegen Direktansprache:</strong> Wir speichern die zur Umsetzung des Widerspruchs erforderlichen Angaben (sogenannte Sperrliste) dauerhaft, um Sie nicht erneut zu kontaktieren.</li></ul>
+<h2>7. Ihre Rechte</h2>
+<p>Sie haben das Recht auf:</p>
+<ul><li><strong>Auskunft</strong> über die zu Ihnen gespeicherten Daten (Art. 15 DSGVO)</li><li><strong>Berichtigung</strong> unrichtiger Daten (Art. 16 DSGVO)</li><li><strong>Löschung</strong> (Art. 17 DSGVO)</li><li><strong>Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)</li><li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li><li><strong>Widerruf einer erteilten Einwilligung</strong> mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)</li></ul>
+<p><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Ihrer Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO Widerspruch einzulegen. Werden Ihre Daten für Direktwerbung verarbeitet, haben Sie das Recht, <strong>jederzeit und ohne Angabe von Gründen</strong> Widerspruch einzulegen; die Daten werden dann für diese Zwecke nicht mehr verarbeitet.</p>
+<p>Eine formlose Nachricht an <strong>info@clearsitestudio.de</strong> genügt.</p>
+<p><strong>Beschwerderecht:</strong> Sie können sich bei einer Datenschutz-Aufsichtsbehörde beschweren. Für uns zuständig ist die <em>Berliner Beauftragte für Datenschutz und Informationsfreiheit</em>, Alt-Moabit 59–61, 10555 Berlin.</p>
+<h2>8. Nutzung unserer Website</h2>
+<p>Unsere Website <strong>clearsitestudio.de</strong> ist eine rein statische Informationsseite. Es werden <strong>keine Cookies</strong> gesetzt, <strong>keine Analyse- oder Tracking-Dienste</strong> eingesetzt und keine Kontaktformulare betrieben. Schriftarten und alle weiteren Ressourcen werden lokal von unserem Server geladen — es werden keine Verbindungen zu Drittanbietern (z. B. Google Fonts) aufgebaut.</p>
+<p>Die Website wird bei <strong>GitHub Pages</strong> gehostet, einem Dienst der GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA. Beim Aufruf verarbeitet GitHub technisch notwendige Daten, insbesondere die IP-Adresse des aufrufenden Geräts, in Server-Logfiles. Dies ist für Auslieferung und Sicherheit der Website technisch erforderlich. <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren und effizienten Betrieb der Website). GitHub ist unter dem EU-US Data Privacy Framework zertifiziert. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
+<h2>9. Verarbeitung im Auftrag unserer Kunden</h2>
+<p>Betreiben oder betreuen wir für einen Kunden eine Website, verarbeiten wir die dort anfallenden Daten von Website-Besuchern ausschließlich <strong>im Auftrag</strong> des jeweiligen Kunden. Verantwortlicher im Sinne der DSGVO ist in diesen Fällen der Kunde; es gilt dessen Datenschutzerklärung. Grundlage unserer Tätigkeit ist ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+<h2>10. Sicherheit und Aktualität</h2>
+<p>Wir treffen angemessene technische und organisatorische Maßnahmen, um Ihre Daten gegen Verlust, Manipulation und unberechtigten Zugriff zu schützen. Die Datenübertragung auf unserer Website erfolgt verschlüsselt über TLS.</p>
+<p>Wir passen diese Datenschutzerklärung an, sobald sich unsere Verarbeitung oder die Rechtslage ändert. Es gilt die jeweils auf clearsitestudio.de veröffentlichte Fassung.</p>
   </div>
 </main>
 
 <footer>
   <div class="wrap foot">
     <span>© 2026 ClearSite Studio — Berlin</span>
-    <span><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
+    <span><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="widerruf.html">Widerruf</a></span>
   </div>
 </footer>
 
